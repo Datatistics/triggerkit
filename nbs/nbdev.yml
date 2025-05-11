@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "triggerkit"
+  site-url: "https://Datatistics.github.io/triggerkit"
+  description: "Modular kit for trigger-based actions"
+  repo-branch: main
+  repo-url: "https://github.com/Datatistics/triggerkit"
