@@ -62,23 +62,23 @@
   {
     "objectID": "API/actions.html",
     "href": "API/actions.html",
-    "title": "Actions",
+    "title": "actions",
     "section": "",
     "text": "source\n\nregister\n\n register (name:str, description:Optional[str]=None)\n\n*Register a function as an action in the global registry.\nArgs: name: Unique identifier for the action description: Optional description of what the action does\nReturns: Decorator function that registers the decorated function\nRaises: ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]])\n\n*Run a registered action with the provided data.\nArgs: action_name: Name of the registered action data: Data to pass to the action\nReturns: Result of the action*",
     "crumbs": [
       "API",
-      "Actions"
+      "actions"
     ]
   },
   {
     "objectID": "API/jobs.html",
     "href": "API/jobs.html",
-    "title": "Jobs",
+    "title": "jobs",
     "section": "",
     "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None)\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs: view_name: Name of the registered view action_names: Name or list of names of registered actions job_name: Optional name for the job\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs: config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop.",
     "crumbs": [
       "API",
-      "Jobs"
+      "jobs"
     ]
   },
   {
@@ -116,7 +116,7 @@
     "href": "API/app.html",
     "title": "App",
     "section": "",
-    "text": "source\n\ninit\n\n init (config_path:str)\n\n*Initialize the application.\nArgs: config_path: Path to TOML config file\nReturns: None*\n\n#exporti\n\ndef main(args=None):\n    \"\"\"Main entry point for the application.\n    \n    Args:\n        args: Optional list of command line argument strings, or parsed args object.\n              If None, will parse from command line.\n    \"\"\"\n    if args is None or not isinstance(args, argparse.Namespace):\n        args = _parse_arguments(args)\n    \n    # Set log level based on verbosity\n    if args.verbose:\n        logging.getLogger().setLevel(logging.DEBUG)\n        logger.debug(\"Verbose logging enabled\")\n    \n    # Check if config file exists\n    config_path = Path(args.config)\n    if not config_path.exists():\n        logger.error(f\"Configuration file not found: {config_path}\")\n        sys.exit(1)\n    \n    logger.info(f\"Using configuration file: {config_path}\")\n    \n    # Just list actions if requested\n    if args.list_actions:\n        list_available_actions()\n        sys.exit(0)\n    \n    # Just check config if requested\n    if args.check_config:\n        try:\n            from snowflake_action_framework import load_config\n            config = load_config(args.config)\n            logger.info(f\"Configuration file is valid: {args.config}\")\n            \n            # Display summary of configuration\n            logger.info(f\"Found {len(config.get('views', []))} views\")\n            logger.info(f\"Found {len(config.get('jobs', []))} jobs\")\n            \n            # Display enabled jobs\n            enabled_jobs = [j for j in config.get('jobs', []) if j.get('enabled', True)]\n            logger.info(f\"Enabled jobs ({len(enabled_jobs)}):\")\n            for job in enabled_jobs:\n                logger.info(f\"  - {job.get('name')}: {job.get('view')} → {job.get('actions')} ({job.get('schedule')})\")\n            \n            sys.exit(0)\n        except Exception as e:\n            logger.error(f\"Error validating configuration: {str(e)}\")\n            sys.exit(1)\n    \n    # Initialize and run the application\n    try:\n        logger.info(\"Starting Snowflake Action System\")\n        init_app(args.config)\n    except KeyboardInterrupt:\n        logger.info(\"Shutting down Snowflake Action System\")\n    except Exception as e:\n        logger.error(f\"Application error: {str(e)}\", exc_info=True)\n        sys.exit(1)",
+    "text": "source\n\ninit\n\n init (config_path:str)\n\n*Initialize the application.\nArgs: config_path: Path to TOML config file\nReturns: None*\n\n#exporti\n\ndef main(args=None):\n    \"\"\"Main entry point for the application.\n    \n    Args:\n        args: Optional list of command line argument strings, or parsed args object.\n              If None, will parse from command line.\n    \"\"\"\n    if args is None or not isinstance(args, argparse.Namespace):\n        args = _parse_arguments(args)\n    \n    # Set log level based on verbosity\n    if args.verbose:\n        logging.getLogger().setLevel(logging.DEBUG)\n        logger.debug(\"Verbose logging enabled\")\n    \n    # Check if config file exists\n    config_path = Path(args.config)\n    if not config_path.exists():\n        logger.error(f\"Configuration file not found: {config_path}\")\n        sys.exit(1)\n    \n    logger.info(f\"Using configuration file: {config_path}\")\n    \n    # Just list actions if requested\n    if args.list_actions:\n        list_available_actions()\n        sys.exit(0)\n    \n    # Just check config if requested\n    if args.check_config:\n        try:\n            config = core.load_config(args.config)\n            logger.info(f\"Configuration file is valid: {args.config}\")\n            \n            # Display summary of configuration\n            logger.info(f\"Found {len(config.get('views', []))} views\")\n            logger.info(f\"Found {len(config.get('jobs', []))} jobs\")\n            \n            # Display enabled jobs\n            enabled_jobs = [j for j in config.get('jobs', []) if j.get('enabled', True)]\n            logger.info(f\"Enabled jobs ({len(enabled_jobs)}):\")\n            for job in enabled_jobs:\n                logger.info(f\"  - {job.get('name')}: {job.get('view')} → {job.get('actions')} ({job.get('schedule')})\")\n            \n            sys.exit(0)\n        except Exception as e:\n            logger.error(f\"Error validating configuration: {str(e)}\")\n            sys.exit(1)\n    \n    # Initialize and run the application\n    try:\n        logger.info(\"Starting Snowflake Action System\")\n        init_app(args.config)\n    except KeyboardInterrupt:\n        logger.info(\"Shutting down Snowflake Action System\")\n    except Exception as e:\n        logger.error(f\"Application error: {str(e)}\", exc_info=True)\n        sys.exit(1)",
     "crumbs": [
       "API",
       "App"

@@ -1,0 +1,13 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - section: API
+        contents:
+          - API/00_core.ipynb
+          - API/01_actions.ipynb
+          - API/02_jobs.ipynb
+          - API/03_app.ipynb
+          - section: database
+            contents:
+              - API/database/snowflake.ipynb

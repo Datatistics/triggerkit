@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Definiting actions, how to register them, etc.">
+<meta name="description" content="Fill in a module description here">
 
-<title>Actions – triggerkit</title>
+<title>Jobs – triggerkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,11 +71,11 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Actions – triggerkit">
-<meta property="og:description" content="Definiting actions, how to register them, etc.">
+<meta property="og:title" content="Jobs – triggerkit">
+<meta property="og:description" content="Fill in a module description here">
 <meta property="og:site_name" content="triggerkit">
-<meta name="twitter:title" content="Actions – triggerkit">
-<meta name="twitter:description" content="Definiting actions, how to register them, etc.">
+<meta name="twitter:title" content="Jobs – triggerkit">
+<meta name="twitter:description" content="Fill in a module description here">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -100,7 +100,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../API/core.html">API</a></li><li class="breadcrumb-item"><a href="../API/actions.html">Actions</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Jobs</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -135,20 +135,20 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../API/actions.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Actions</span></a>
+  <a href="../API/actions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">actions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../API/jobs.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Jobs</span></a>
+ <span class="menu-text">jobs</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../API/app.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">core</span></a>
+ <span class="menu-text">App</span></a>
   </div>
 </li>
           <li class="sidebar-item sidebar-item-section">
@@ -180,24 +180,22 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#register" id="toc-register" class="nav-link active" data-scroll-target="#register">register</a></li>
-  <li><a href="#get_info" id="toc-get_info" class="nav-link" data-scroll-target="#get_info">get_info</a></li>
-  <li><a href="#list_available" id="toc-list_available" class="nav-link" data-scroll-target="#list_available">list_available</a></li>
-  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">run</a></li>
+  <li><a href="#foo" id="toc-foo" class="nav-link active" data-scroll-target="#foo">foo</a></li>
+  <li><a href="#run_scheduler" id="toc-run_scheduler" class="nav-link" data-scroll-target="#run_scheduler">run_scheduler</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Datatistics/triggerkit/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../API/core.html">API</a></li><li class="breadcrumb-item"><a href="../API/actions.html">Actions</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Actions</h1>
+<h1 class="title">Jobs</h1>
 </div>
 
 <div>
   <div class="description">
-    Definiting actions, how to register them, etc.
+    Fill in a module description here
   </div>
 </div>
 
@@ -216,45 +214,21 @@ ul.task-list li input[type="checkbox"] {
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L15" target="_blank" style="float:right; font-size:smaller">source</a></p>
-<section id="register" class="level3">
-<h3 class="anchored" data-anchor-id="register">register</h3>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/schedule.py#L9" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="foo" class="level3">
+<h3 class="anchored" data-anchor-id="foo">foo</h3>
 <blockquote class="blockquote">
-<pre><code> register (name:str, description:Optional[str]=None)</code></pre>
+<pre><code> foo ()</code></pre>
 </blockquote>
-<p>*Register a function as an action in the global registry.</p>
-<p>Args: name: Unique identifier for the action description: Optional description of what the action does</p>
-<p>Returns: Decorator function that registers the decorated function</p>
-<p>Raises: ValueError: If an action with the same name already exists*</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L58" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/schedule.py#L12" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
-<section id="get_info" class="level3">
-<h3 class="anchored" data-anchor-id="get_info">get_info</h3>
+<section id="run_scheduler" class="level3">
+<h3 class="anchored" data-anchor-id="run_scheduler">run_scheduler</h3>
 <blockquote class="blockquote">
-<pre><code> get_info (name:str)</code></pre>
+<pre><code> run_scheduler ()</code></pre>
 </blockquote>
-<p><em>Get detailed information about a specific action.</em></p>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L50" target="_blank" style="float:right; font-size:smaller">source</a></p>
-</section>
-<section id="list_available" class="level3">
-<h3 class="anchored" data-anchor-id="list_available">list_available</h3>
-<blockquote class="blockquote">
-<pre><code> list_available ()</code></pre>
-</blockquote>
-<p><em>List all registered actions with their descriptions.</em></p>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L73" target="_blank" style="float:right; font-size:smaller">source</a></p>
-</section>
-<section id="run" class="level3">
-<h3 class="anchored" data-anchor-id="run">run</h3>
-<blockquote class="blockquote">
-<pre><code> run (action_name:str, data:List[Dict[str,Any]])</code></pre>
-</blockquote>
-<p>*Run a registered action with the provided data.</p>
-<p>Args: action_name: Name of the registered action data: Data to pass to the action</p>
-<p>Returns: Result of the action*</p>
+<p><em>Run the scheduler loop.</em></p>
 
 
 </section>
