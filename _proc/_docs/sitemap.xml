@@ -1,3 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/index.html</loc>
+    <lastmod>2025-05-11T16:49:49.143Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/actions.html</loc>
+    <lastmod>2025-05-11T16:49:49.567Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/jobs.html</loc>
+    <lastmod>2025-05-11T17:00:37.425Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/core.html</loc>
+    <lastmod>2025-05-11T17:00:37.410Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/database/snowflake.html</loc>
+    <lastmod>2025-05-11T16:49:49.567Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/schedule.html</loc>
+    <lastmod>2025-05-11T16:49:49.146Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/app.html</loc>
+    <lastmod>2025-05-11T17:48:50.108Z</lastmod>
+  </url>
 </urlset>

@@ -1,0 +1,80 @@
+# Snowflake Actions Configuration
+
+# Snowflake connection settings
+[snowflake]
+user = "your_username"
+password = "your_password"  # Consider using environment variables for sensitive data
+account = "your_account"
+warehouse = "your_warehouse"
+database = "your_database"
+schema = "your_schema"
+role = "ACCOUNTADMIN"  # Optional, defaults to ACCOUNTADMIN
+
+# Email notification settings
+[email]
+smtp_server = "smtp.company.com"
+smtp_port = 587
+username = "alerts@company.com"
+password = "your_password"  # Consider using environment variables
+from_address = "alerts@company.com"
+to_addresses = ["team@company.com", "manager@company.com"]
+
+# Slack notification settings
+[slack]
+webhook_url = "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+channel = "#alerts"
+username = "Snowflake Monitor"
+
+# View definitions
+# Each view can specify a custom query or reference an existing view
+[[views]]
+name = "billing_anomalies_view"
+query = """
+    SELECT * FROM BILLING_ANOMALIES 
+    WHERE detected_at > DATEADD(minute, -15, CURRENT_TIMESTAMP())
+"""
+description = "Recent billing anomalies detected in the last 15 minutes"
+
+[[views]]
+name = "usage_spikes_view"
+query = """
+    SELECT * FROM USAGE_SPIKES 
+    WHERE timestamp > DATEADD(hour, -1, CURRENT_TIMESTAMP())
+    AND severity IN ('HIGH', 'CRITICAL')
+"""
+description = "Significant usage spikes in the last hour"
+
+[[views]]
+name = "daily_summary_view"
+query = """
+    SELECT date, category, resource_type, COUNT(*) as count, SUM(value) as total_value
+    FROM DAILY_METRICS
+    WHERE date = CURRENT_DATE()
+    GROUP BY date, category, resource_type
+"""
+description = "Daily summary metrics for reporting"
+
+# Job definitions
+# Each job connects a view with one or more actions on a schedule
+[[jobs]]
+name = "billing_anomaly_alerts"
+view = "billing_anomalies_view"
+actions = ["send_alert"]
+schedule = "every 15 minutes"
+enabled = true
+
+[[jobs]]
+name = "usage_spike_monitoring"
+view = "usage_spikes_view"
+actions = ["send_alert", "log_incident"]
+schedule = "every 1 hour"
+enabled = true
+
+[[jobs]]
+name = "daily_reporting"
+view = "daily_summary_view"
+actions = ["generate_report"]
+schedule = "every 1 day"
+enabled = true
+# Can specify time of day as well
+run_at = "06:00"  # Run at 6 AM
