@@ -103,6 +103,66 @@ def init(config_path: str):
     # Run the scheduler
     jobs.run_scheduler()
 
+# %% ../nbs/API/03_app.ipynb 7
+def main(args=None):
+    """Main entry point for the application.
+    
+    Args:
+        args: Optional list of command line argument strings, or parsed args object.
+              If None, will parse from command line.
+    """
+    if args is None or not isinstance(args, argparse.Namespace):
+        args = _parse_arguments(args)
+    
+    # Set log level based on verbosity
+    if args.verbose:
+        logging.getLogger().setLevel(logging.DEBUG)
+        logger.debug("Verbose logging enabled")
+    
+    # Check if config file exists
+    config_path = Path(args.config)
+    if not config_path.exists():
+        logger.error(f"Configuration file not found: {config_path}")
+        sys.exit(1)
+    
+    logger.info(f"Using configuration file: {config_path}")
+    
+    # Just list actions if requested
+    if args.list_actions:
+        list_available_actions()
+        sys.exit(0)
+    
+    # Just check config if requested
+    if args.check_config:
+        try:
+            config = core.load_config(args.config)
+            logger.info(f"Configuration file is valid: {args.config}")
+            
+            # Display summary of configuration
+            logger.info(f"Found {len(config.get('views', []))} views")
+            logger.info(f"Found {len(config.get('jobs', []))} jobs")
+            
+            # Display enabled jobs
+            enabled_jobs = [j for j in config.get('jobs', []) if j.get('enabled', True)]
+            logger.info(f"Enabled jobs ({len(enabled_jobs)}):")
+            for job in enabled_jobs:
+                logger.info(f"  - {job.get('name')}: {job.get('view')} → {job.get('actions')} ({job.get('schedule')})")
+            
+            sys.exit(0)
+        except Exception as e:
+            logger.error(f"Error validating configuration: {str(e)}")
+            sys.exit(1)
+    
+    # Initialize and run the application
+    try:
+        logger.info("Starting Snowflake Action System")
+        init_app(args.config)
+    except KeyboardInterrupt:
+        logger.info("Shutting down Snowflake Action System")
+    except Exception as e:
+        logger.error(f"Application error: {str(e)}", exc_info=True)
+        sys.exit(1)
+
 # %% ../nbs/API/03_app.ipynb 8
 def _is_running_in_notebook():
     try:

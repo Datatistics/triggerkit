@@ -16,5 +16,10 @@ website:
     search: true
   sidebar:
     style: floating
-
+  announcement: 
+    icon: wrench-adjustable-circle-fill
+    dismissable: true
+    content: "**Alert** - In active development and not ready for public use. Should be ready in a week or two!"
+    type: info
+    position: below-navbar
 metadata-files: [nbdev.yml, sidebar.yml]
