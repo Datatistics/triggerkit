@@ -4,10 +4,13 @@ website:
       - index.ipynb
       - section: API
         contents:
-          - API/00_core.ipynb
           - API/01_actions.ipynb
           - API/02_jobs.ipynb
           - API/03_app.ipynb
+          - API/99_.ipynb
           - section: database
             contents:
               - API/database/snowflake.ipynb
+      - section: Tutoruals
+        contents:
+          - Tutoruals/Getting Started.ipynb
