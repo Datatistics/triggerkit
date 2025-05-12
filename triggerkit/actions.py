@@ -4,7 +4,7 @@
 __all__ = ['send_slack_message', 'run_sql', 'register', 'list_available', 'get_info', 'run']
 
 # %% ../nbs/API/01_actions.ipynb 2
-from . import core
+from . import util
 from typing import Dict, List, Callable, Optional, Any, Union
 
 # %% ../nbs/API/01_actions.ipynb 6
@@ -18,7 +18,7 @@ def run_sql(data):
     pass
 
 # %% ../nbs/API/01_actions.ipynb 8
-core.ACTION_REGISTRY: Dict[str, Callable] = {}
+util.ACTION_REGISTRY: Dict[str, Callable] = {}
 
 def register(name: str, description: Optional[str] = None):
     """
@@ -32,7 +32,7 @@ def register(name: str, description: Optional[str] = None):
        \n • `ValueError`: If an action with the same name already exists
     """
     def decorator(fn: Callable) -> Callable:
-        if name in core.ACTION_REGISTRY and core.ACTION_REGISTRY[name] != fn:
+        if name in util.ACTION_REGISTRY and util.ACTION_REGISTRY[name] != fn:
             raise ValueError(f"An action named '{name}' is already registered.")
         
         # Add metadata to the function
@@ -40,7 +40,7 @@ def register(name: str, description: Optional[str] = None):
         fn._action_description = description
         
         # Add to registry
-        core.ACTION_REGISTRY[name] = fn
+        util.ACTION_REGISTRY[name] = fn
         
         # Preserve function metadata like docstrings
         @functools.wraps(fn)
@@ -58,14 +58,14 @@ def list_available():
     for name, fn in core.ACTION_REGISTRY.items():
         description = getattr(fn, "_action_description", "No description available")
         print(f"  - {name}: {description}")
-    return core.ACTION_REGISTRY
+    return util.ACTION_REGISTRY
 
 def get_info(name: str) -> Dict[str, Any]:
     """Get detailed information about a specific action."""
-    if name not in core.ACTION_REGISTRY:
+    if name not in util.ACTION_REGISTRY:
         raise ValueError(f"No action named '{name}' is registered.")
     
-    fn = core.ACTION_REGISTRY[name]
+    fn = util.ACTION_REGISTRY[name]
     info = {
         "name": name,
         "description": getattr(fn, "_action_description", "No description available"),
@@ -86,14 +86,14 @@ def run(action_name: str, data: List[Dict[str, Any]]) -> Any:
     Returns:
         Result of the action
     """
-    if action_name not in core.ACTION_REGISTRY:
+    if action_name not in util.ACTION_REGISTRY:
         raise ValueError(f"No action named '{action_name}' is registered")
     
-    action = core.ACTION_REGISTRY[action_name]
+    action = util.ACTION_REGISTRY[action_name]
     try:
         result = action(data)
-        core.logger.info(f"Successfully executed action '{action_name}'")
+        util.logger.info(f"Successfully executed action '{action_name}'")
         return result
     except Exception as e:
-        core.logger.error(f"Failed to execute action '{action_name}': {str(e)}")
+        util.logger.error(f"Failed to execute action '{action_name}': {str(e)}")
         raise

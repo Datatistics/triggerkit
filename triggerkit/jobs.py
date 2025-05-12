@@ -7,7 +7,7 @@ __all__ = ['create', 'schedule_jobs', 'run_scheduler']
 
 # %% ../nbs/API/02_jobs.ipynb 3
 import schedule
-from . import core
+from . import util
 from typing import Dict, List, Callable, Optional, Any, Union
 
 # %% ../nbs/API/02_jobs.ipynb 4
@@ -30,7 +30,7 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
         job_name = f"{view_name}_{'_'.join(action_names)}_job"
     
     def job():
-        core.logger.info(f"Running job '{job_name}'")
+        util.logger.info(f"Running job '{job_name}'")
         try:
             # Fetch data from view
             data = execute_query(view_name)
@@ -40,10 +40,10 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
             for action_name in action_names:
                 results[action_name] = run_action(action_name, data)
             
-            core.logger.info(f"Job '{job_name}' completed successfully")
+            util.logger.info(f"Job '{job_name}' completed successfully")
             return results
         except Exception as e:
-            core.logger.error(f"Job '{job_name}' failed: {str(e)}")
+            util.logger.error(f"Job '{job_name}' failed: {str(e)}")
             raise
     
     job.__name__ = job_name
@@ -71,11 +71,11 @@ def schedule_jobs(config: Dict[str, Any]):
         run_at = job_config.get('run_at')
         
         if not enabled:
-            core.logger.info(f"Job '{name}' is disabled, skipping")
+            util.logger.info(f"Job '{name}' is disabled, skipping")
             continue
             
         if not all([view_name, actions, schedule_str]):
-            core.logger.warning(f"Skipping invalid job configuration: {job_config}")
+            util.logger.warning(f"Skipping invalid job configuration: {job_config}")
             continue
         
         job = create_job(view_name, actions, name)
@@ -105,16 +105,16 @@ def schedule_jobs(config: Dict[str, Any]):
                         run_time = datetime_time(hour=hour, minute=minute)
                         scheduler = scheduler.at(run_at)
                     except (ValueError, AttributeError):
-                        core.logger.warning(f"Invalid run_at time format: {run_at}, expected HH:MM. Using default.")
+                        util.logger.warning(f"Invalid run_at time format: {run_at}, expected HH:MM. Using default.")
                 
                 scheduler.do(job)
-                core.logger.info(f"Scheduled job '{name}' for view '{view_name}' with actions {actions} to run {schedule_str}" + 
+                util.logger.info(f"Scheduled job '{name}' for view '{view_name}' with actions {actions} to run {schedule_str}" + 
                            (f" at {run_at}" if run_at and unit in ('day', 'days') else ""))
             except ValueError:
-                core.logger.warning(f"Invalid schedule format: {schedule_str}")
+                util.logger.warning(f"Invalid schedule format: {schedule_str}")
                 continue
         else:
-            core.logger.warning(f"Unsupported schedule format: {schedule_str}")
+            util.logger.warning(f"Unsupported schedule format: {schedule_str}")
             continue
 
 # %% ../nbs/API/02_jobs.ipynb 6

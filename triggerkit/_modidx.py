@@ -23,4 +23,5 @@ d = { 'settings': { 'branch': 'main',
             'triggerkit.snowflake': { 'triggerkit.snowflake.connect': ('API/database/snowflake.html#connect', 'triggerkit/snowflake.py'),
                                       'triggerkit.snowflake.query': ('API/database/snowflake.html#query', 'triggerkit/snowflake.py'),
                                       'triggerkit.snowflake.register_view': ( 'API/database/snowflake.html#register_view',
-                                                                              'triggerkit/snowflake.py')}}}
+                                                                              'triggerkit/snowflake.py')},
+            'triggerkit.util': {'triggerkit.util.load_config': ('API/util.html#load_config', 'triggerkit/util.py')}}}

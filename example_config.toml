@@ -10,23 +10,7 @@ database = "your_database"
 schema = "your_schema"
 role = "ACCOUNTADMIN"  # Optional, defaults to ACCOUNTADMIN (not ideal tho...)
 
-# Email notification settings
-[email]
-smtp_server = "smtp.company.com"
-smtp_port = 587
-username = "alerts@company.com"
-password = "your_password"  # Consider using environment variables
-from_address = "alerts@company.com"
-to_addresses = ["team@company.com", "manager@company.com"]
 
-# Slack notification settings
-[slack]
-webhook_url = "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
-channel = "#alerts"
-username = "Snowflake Monitor"
-
-# View definitions
-# Each view can specify a custom query or reference an existing view
 [[views]]
 name = "billing_anomalies_view"
 query = """
