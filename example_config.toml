@@ -8,7 +8,7 @@ account = "your_account"
 warehouse = "your_warehouse"
 database = "your_database"
 schema = "your_schema"
-role = "ACCOUNTADMIN"  # Optional, defaults to ACCOUNTADMIN
+role = "ACCOUNTADMIN"  # Optional, defaults to ACCOUNTADMIN (not ideal tho...)
 
 # Email notification settings
 [email]

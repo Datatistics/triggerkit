@@ -11,6 +11,9 @@ website:
           - section: database
             contents:
               - API/database/snowflake.ipynb
+      - section: Explanations
+        contents:
+          - Explanations/about.ipynb
       - section: Tutorials
         contents:
           - Tutorials/Getting Started.ipynb

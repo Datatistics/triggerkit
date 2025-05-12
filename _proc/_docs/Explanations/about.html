@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>actions – triggerkit</title>
+<title>What is TriggerKit? – triggerkit</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,13 +67,16 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="actions – triggerkit">
+<meta property="og:title" content="What is TriggerKit? – triggerkit">
 <meta property="og:description" content="Modular kit for trigger-based actions">
 <meta property="og:site_name" content="triggerkit">
-<meta name="twitter:title" content="actions – triggerkit">
+<meta name="twitter:title" content="What is TriggerKit? – triggerkit">
 <meta name="twitter:description" content="Modular kit for trigger-based actions">
 <meta name="twitter:card" content="summary">
 </head>
@@ -89,9 +92,20 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">triggerkit</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-end">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
 </div>
-          <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -99,13 +113,13 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../API/actions.html">API</a></li><li class="breadcrumb-item"><a href="../API/actions.html">actions</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Explanations/about.html">Explanations</a></li><li class="breadcrumb-item"><a href="../Explanations/about.html">What is TriggerKit?</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
   </nav>
-  <div id="quarto-announcement" data-announcement-id="3245c09675c8fcc6457e4c83f3f5ee47" class="alert alert-info hidden"><i class="bi bi-wrench-adjustable-circle-fill quarto-announcement-icon"></i><div class="quarto-announcement-content">
-<p><strong>Alert</strong> - TriggerKit is in active development and not ready for public use. Should be ready in a week or two!</p>
+  <div id="quarto-announcement" data-announcement-id="b0410d67aff2383431012773370c04dd" class="alert alert-info hidden"><i class="bi bi-wrench-adjustable-circle-fill quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>TriggerKit is in active development and not ready for public use. Should be ready in a week or two!</p>
 </div><i class="bi bi-x-lg quarto-announcement-action"></i></div>
 </header>
 <!-- content -->
@@ -114,6 +128,12 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index copy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">TriggerKit</span></a>
+  </div>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
@@ -132,8 +152,21 @@ ul.task-list li input[type="checkbox"] {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start">
- <span class="menu-text">Explanations</span></span>
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Explanations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../Explanations/about.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">What is TriggerKit?</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
@@ -146,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../API/actions.html" class="sidebar-item-text sidebar-link active">
+  <a href="../API/actions.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">actions</span></a>
   </div>
 </li>
@@ -180,27 +213,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#built-in-actions" id="toc-built-in-actions" class="nav-link active" data-scroll-target="#built-in-actions">Built In Actions:</a>
-  <ul class="collapse">
-  <li><a href="#run_sql" id="toc-run_sql" class="nav-link" data-scroll-target="#run_sql">run_sql</a></li>
-  <li><a href="#send_slack_message" id="toc-send_slack_message" class="nav-link" data-scroll-target="#send_slack_message">send_slack_message</a></li>
-  </ul></li>
-  <li><a href="#make-your-own-actions" id="toc-make-your-own-actions" class="nav-link" data-scroll-target="#make-your-own-actions">Make Your Own Actions</a>
-  <ul class="collapse">
-  <li><a href="#register" id="toc-register" class="nav-link" data-scroll-target="#register">register</a></li>
-  <li><a href="#get_info" id="toc-get_info" class="nav-link" data-scroll-target="#get_info">get_info</a></li>
-  <li><a href="#list_available" id="toc-list_available" class="nav-link" data-scroll-target="#list_available">list_available</a></li>
-  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run">run</a></li>
-  </ul></li>
+  <li><a href="#general-design" id="toc-general-design" class="nav-link active" data-scroll-target="#general-design">General Design</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Datatistics/triggerkit/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../API/actions.html">API</a></li><li class="breadcrumb-item"><a href="../API/actions.html">actions</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../Explanations/about.html">Explanations</a></li><li class="breadcrumb-item"><a href="../Explanations/about.html">What is TriggerKit?</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">actions</h1>
+<h1 class="title">What is TriggerKit?</h1>
 </div>
 
 
@@ -218,76 +240,33 @@ ul.task-list li input[type="checkbox"] {
 
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
-<p>When your views yields results, what <strong>TriggerKit</strong> performs are <strong>actions</strong>. These are functions that take in results and perform things like send slack messages, perform SQL operations, make API calls, etc.</p>
-<p>You can either use some of our built-in actions or build your own!</p>
-<section id="built-in-actions" class="level2">
-<h2 class="anchored" data-anchor-id="built-in-actions">Built In Actions:</h2>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L17" target="_blank" style="float:right; font-size:smaller">source</a></p>
-<section id="run_sql" class="level3">
-<h3 class="anchored" data-anchor-id="run_sql">run_sql</h3>
-<blockquote class="blockquote">
-<pre><code> run_sql (data)</code></pre>
-</blockquote>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L11" target="_blank" style="float:right; font-size:smaller">source</a></p>
-</section>
-<section id="send_slack_message" class="level3">
-<h3 class="anchored" data-anchor-id="send_slack_message">send_slack_message</h3>
-<blockquote class="blockquote">
-<pre><code> send_slack_message (data)</code></pre>
-</blockquote>
-<p><em>Use the returned data to send slack messages. This could be used for creating alerts for data issues, reporting on metrics, etc.</em></p>
-</section>
-</section>
-<section id="make-your-own-actions" class="level2">
-<h2 class="anchored" data-anchor-id="make-your-own-actions">Make Your Own Actions</h2>
-<p>It is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and <a href="https://Datatistics.github.io/triggerkit/API/actions.html#register"><code>register</code></a> it with the system</p>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L23" target="_blank" style="float:right; font-size:smaller">source</a></p>
-<section id="register" class="level3">
-<h3 class="anchored" data-anchor-id="register">register</h3>
-<blockquote class="blockquote">
-<pre><code> register (name:str, description:Optional[str]=None)</code></pre>
-</blockquote>
-<p>*Register your function as an action in the global registry.</p>
-<p><strong>Args</strong>:</p>
-<p>• <code>name</code>: Descriptive name for your action</p>
-<p>• <code>description</code>: Optional description of what the action does</p>
-<p><strong>Raises</strong>:</p>
-<p>• <code>ValueError</code>: If an action with the same name already exists*</p>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L63" target="_blank" style="float:right; font-size:smaller">source</a></p>
-</section>
-<section id="get_info" class="level3">
-<h3 class="anchored" data-anchor-id="get_info">get_info</h3>
-<blockquote class="blockquote">
-<pre><code> get_info (name:str)</code></pre>
-</blockquote>
-<p><em>Get detailed information about a specific action.</em></p>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L55" target="_blank" style="float:right; font-size:smaller">source</a></p>
-</section>
-<section id="list_available" class="level3">
-<h3 class="anchored" data-anchor-id="list_available">list_available</h3>
-<blockquote class="blockquote">
-<pre><code> list_available ()</code></pre>
-</blockquote>
-<p><em>List all registered actions with their descriptions.</em></p>
-<hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L78" target="_blank" style="float:right; font-size:smaller">source</a></p>
-</section>
-<section id="run" class="level3">
-<h3 class="anchored" data-anchor-id="run">run</h3>
-<blockquote class="blockquote">
-<pre><code> run (action_name:str, data:List[Dict[str,Any]])</code></pre>
-</blockquote>
-<p>*Run a registered action with the provided data.</p>
-<p>Args: action_name: Name of the registered action data: Data to pass to the action</p>
-<p>Returns: Result of the action*</p>
+<p>TriggerKit is a python package made to help you build smarter data system. It was designed to fill a need the creator saw, it can be hard to make data <strong>actionable</strong>. It shouldn’t be hard, or expensive, to keep people informed about issues or ___.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis posuere ligula sit amet lacinia. Duis dignissim pellentesque magna, rhoncus congue sapien finibus mollis. Ut eu sem laoreet, vehicula ipsum in, convallis erat. Vestibulum magna sem, blandit pulvinar augue sit amet, auctor malesuada sapien. Nullam faucibus leo eget eros hendrerit, non laoreet ipsum lacinia. Curabitur cursus diam elit, non tempus ante volutpat a. Quisque hendrerit blandit purus non fringilla. Integer sit amet elit viverra ante dapibus semper. Vestibulum viverra rutrum enim, at luctus enim posuere eu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+<section id="general-design" class="level2">
+<h2 class="anchored" data-anchor-id="general-design">General Design</h2>
+<p>TriggerKit is pretty simple, you define a query or view that it should monitor, <a href="schedule.html">when</a> it should check it, and <a href="actions.html">what</a> it should do if there are any results:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">---
+title: TriggerKit Design
+---
+flowchart LR
+  A[(Snowflake)] -- Results --&gt; B((TriggerKit))
+  B -..-&gt; C(Send Slack)
+  B -..-&gt; D(Run SQL)
+  B ---&gt; E(API Call)
+  B -..-&gt; F(Trigger DAG)
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

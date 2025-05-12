@@ -14,12 +14,23 @@ website:
   navbar:
     background: primary
     search: true
+    left:
+      - text: "Home"
+        href: index.ipynb
   sidebar:
     style: floating
+    contents:
+      - auto: "/*.ipynb"
+      - section: Tutorials
+        contents: Tutorials/*
+      - section: Explanations
+        contents: Explanations/*
+      - section: API
+        contents: API/*
   announcement: 
     icon: wrench-adjustable-circle-fill
     dismissable: true
-    content: "**Alert** - In active development and not ready for public use. Should be ready in a week or two!"
+    content: "TriggerKit is in active development and not ready for public use. Should be ready in a week or two!"
     type: info
     position: below-navbar
-metadata-files: [nbdev.yml, sidebar.yml]
+metadata-files: [nbdev.yml]

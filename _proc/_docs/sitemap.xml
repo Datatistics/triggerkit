@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Datatistics.github.io/triggerkit/Tutorials/getting started.html</loc>
-    <lastmod>2025-05-12T01:22:14.621Z</lastmod>
+    <lastmod>2025-05-12T03:45:40.386Z</lastmod>
   </url>
   <url>
     <loc>https://Datatistics.github.io/triggerkit/API/actions.html</loc>
@@ -27,5 +27,17 @@
   <url>
     <loc>https://Datatistics.github.io/triggerkit/index.html</loc>
     <lastmod>2025-05-12T01:22:14.569Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/Explanations/about.html</loc>
+    <lastmod>2025-05-12T03:40:51.197Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/about.html</loc>
+    <lastmod>2025-05-12T03:43:35.735Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/index copy.html</loc>
+    <lastmod>2025-05-12T03:38:15.163Z</lastmod>
   </url>
 </urlset>

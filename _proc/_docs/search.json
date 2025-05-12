@@ -82,58 +82,163 @@
     "href": "index.html",
     "title": "TriggerKit",
     "section": "",
-    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit",
-    "crumbs": [
-      "TriggerKit"
-    ]
+    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit"
   },
   {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
     "title": "TriggerKit",
     "section": "",
-    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit",
-    "crumbs": [
-      "TriggerKit"
-    ]
+    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit"
   },
   {
     "objectID": "index.html#usage",
     "href": "index.html#usage",
     "title": "TriggerKit",
     "section": "Usage",
-    "text": "Usage\nRun the system with your configuration file:\n# Using default config.toml in current directory\nsnowflake-actions\n\n# Or specify a config file\nsnowflake-actions --config /path/to/your/config.toml\n\n# To check your configuration file syntax\nsnowflake-actions --check-config\n\n# To list available actions\nsnowflake-actions --list-actions\n\n# For verbose logging\nsnowflake-actions --verbose",
-    "crumbs": [
-      "TriggerKit"
-    ]
+    "text": "Usage\nRun the system with your configuration file:\n# Using default config.toml in current directory\nsnowflake-actions\n\n# Or specify a config file\nsnowflake-actions --config /path/to/your/config.toml\n\n# To check your configuration file syntax\nsnowflake-actions --check-config\n\n# To list available actions\nsnowflake-actions --list-actions\n\n# For verbose logging\nsnowflake-actions --verbose"
   },
   {
     "objectID": "index.html#creating-custom-actions",
     "href": "index.html#creating-custom-actions",
     "title": "TriggerKit",
     "section": "Creating Custom Actions",
-    "text": "Creating Custom Actions\nYou can extend the system with your own custom actions:\nimport triggerkit as tk\n\n@tk.register(\"my_custom_action\", \"Description of what this action does\")\ndef my_custom_action(data: List[Dict]):\n    \"\"\"\n    Takes in records from Snowflake view and processes them how you want.\n    \n    Args:\n        data: List of records from Snowflake\n        \n    Returns:\n        Dictionary with action results\n    \"\"\"\n    # Your custom logic here\n    return {\"processed\": len(data)}",
-    "crumbs": [
-      "TriggerKit"
-    ]
+    "text": "Creating Custom Actions\nYou can extend the system with your own custom actions:\nimport triggerkit as tk\n\n@tk.register(\"my_custom_action\", \"Description of what this action does\")\ndef my_custom_action(data: List[Dict]):\n    \"\"\"\n    Takes in records from Snowflake view and processes them how you want.\n    \n    Args:\n        data: List of records from Snowflake\n        \n    Returns:\n        Dictionary with action results\n    \"\"\"\n    # Your custom logic here\n    return {\"processed\": len(data)}"
   },
   {
     "objectID": "index.html#environment-variables",
     "href": "index.html#environment-variables",
     "title": "TriggerKit",
     "section": "Environment Variables",
-    "text": "Environment Variables\n\nCONFIG_PATH: Path to the TOML configuration file\nSNOWFLAKE_PASSWORD: Snowflake password (recommended over storing in config)\nLOG_LEVEL: Set the logging level (DEBUG, INFO, WARNING, ERROR)",
-    "crumbs": [
-      "TriggerKit"
-    ]
+    "text": "Environment Variables\n\nCONFIG_PATH: Path to the TOML configuration file\nSNOWFLAKE_PASSWORD: Snowflake password (recommended over storing in config)\nLOG_LEVEL: Set the logging level (DEBUG, INFO, WARNING, ERROR)"
   },
   {
     "objectID": "index.html#built-in-actions",
     "href": "index.html#built-in-actions",
     "title": "TriggerKit",
     "section": "Built-in Actions",
+    "text": "Built-in Actions\nThe system comes with several built-in actions:\n\nsend_alert: Sends email and Slack notifications\nlog_incident: Records incidents in a tracking system\ngenerate_report: Creates summary reports from data"
+  },
+  {
+    "objectID": "Explanations/about.html",
+    "href": "Explanations/about.html",
+    "title": "What is TriggerKit?",
+    "section": "",
+    "text": "TriggerKit is a python package made to help you build smarter data system. It was designed to fill a need the creator saw, it can be hard to make data actionable. It shouldn’t be hard, or expensive, to keep people informed about issues or ___.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis posuere ligula sit amet lacinia. Duis dignissim pellentesque magna, rhoncus congue sapien finibus mollis. Ut eu sem laoreet, vehicula ipsum in, convallis erat. Vestibulum magna sem, blandit pulvinar augue sit amet, auctor malesuada sapien. Nullam faucibus leo eget eros hendrerit, non laoreet ipsum lacinia. Curabitur cursus diam elit, non tempus ante volutpat a. Quisque hendrerit blandit purus non fringilla. Integer sit amet elit viverra ante dapibus semper. Vestibulum viverra rutrum enim, at luctus enim posuere eu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "What is TriggerKit?"
+    ]
+  },
+  {
+    "objectID": "Tutorials/getting started.html",
+    "href": "Tutorials/getting started.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "In this tutorial, we will show you how to use and setup TriggerKit!\n\n1. Download TriggerKit\nYou can either install latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from [pypi][pypi]\n$ pip install triggerkit\n\n\n2. Setup Database Connection\n\n\n\n\n\n\nNote\n\n\n\nTriggerKit runs off of defined queries and views. Right now, we only suport connections to Snowflake, but we may add support for other databases downt the line.\n\n\nYou can establish TriggerKit’s connection to your Snowflake through your config.toml file:\n[snowflake]\nuser = \"your_username\"\npassword = \"your_password\"  # Consider using environment variables for sensitive data\naccount = \"your_account\"\nwarehouse = \"your_warehouse\"\ndatabase = \"your_database\"\nschema = \"your_schema\"\nrole = \"ACCOUNTADMIN\"  # Optional, defaults to ACCOUNTADMIN (not ideal tho...)\n\n\n3. Create Your First Trigger and Action\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis posuere ligula sit amet lacinia. Duis dignissim pellentesque magna, rhoncus congue sapien finibus mollis. Ut eu sem laoreet, vehicula ipsum in, convallis erat. Vestibulum magna sem, blandit pulvinar augue sit amet, auctor malesuada sapien. Nullam faucibus leo eget eros hendrerit, non laoreet ipsum lacinia. Curabitur cursus diam elit, non tempus ante volutpat a. Quisque hendrerit blandit purus non fringilla. Integer sit amet elit viverra ante dapibus semper. Vestibulum viverra rutrum enim, at luctus enim posuere eu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+    "crumbs": [
+      "Home",
+      "Tutorials",
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "Explanations/about.html#general-design",
+    "href": "Explanations/about.html#general-design",
+    "title": "What is TriggerKit?",
+    "section": "General Design",
+    "text": "General Design\nTriggerKit is pretty simple, you define a query or view that it should monitor, when it should check it, and what it should do if there are any results:\n\n\n\n\n\n---\ntitle: TriggerKit Design\n---\nflowchart LR\n  A[(Snowflake)] -- Results --&gt; B((TriggerKit))\n  B -..-&gt; C(Send Slack)\n  B -..-&gt; D(Run SQL)\n  B ---&gt; E(API Call)\n  B -..-&gt; F(Trigger DAG)",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "What is TriggerKit?"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Cooper Richason",
+    "section": "",
+    "text": "Cooper Richason is a Data Scientist at Recover.com. When not innovating on data platforms, Finley enjoys spending time unicycling and playing with her pet iguana."
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "Cooper Richason",
+    "section": "Education",
+    "text": "Education\nUniversity of California, San Diego | San Diego, CA PhD in Mathematics | Sept 2011 - June 2015\nMacalester College | St. Paul, MN B.A in Economics | Sept 2007 - June 2011"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "Cooper Richason",
+    "section": "Experience",
+    "text": "Experience\nWengo Analytics | Head Data Scientist | April 2018 - present\nGeoScynce | Chief Analyst | Spet 2012 - April 2018"
+  },
+  {
+    "objectID": "index copy.html",
+    "href": "index copy.html",
+    "title": "TriggerKit",
+    "section": "",
+    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit",
+    "crumbs": [
+      "Home",
+      "TriggerKit"
+    ]
+  },
+  {
+    "objectID": "index copy.html#overview",
+    "href": "index copy.html#overview",
+    "title": "TriggerKit",
+    "section": "",
+    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit",
+    "crumbs": [
+      "Home",
+      "TriggerKit"
+    ]
+  },
+  {
+    "objectID": "index copy.html#usage",
+    "href": "index copy.html#usage",
+    "title": "TriggerKit",
+    "section": "Usage",
+    "text": "Usage\nRun the system with your configuration file:\n# Using default config.toml in current directory\nsnowflake-actions\n\n# Or specify a config file\nsnowflake-actions --config /path/to/your/config.toml\n\n# To check your configuration file syntax\nsnowflake-actions --check-config\n\n# To list available actions\nsnowflake-actions --list-actions\n\n# For verbose logging\nsnowflake-actions --verbose",
+    "crumbs": [
+      "Home",
+      "TriggerKit"
+    ]
+  },
+  {
+    "objectID": "index copy.html#creating-custom-actions",
+    "href": "index copy.html#creating-custom-actions",
+    "title": "TriggerKit",
+    "section": "Creating Custom Actions",
+    "text": "Creating Custom Actions\nYou can extend the system with your own custom actions:\nimport triggerkit as tk\n\n@tk.register(\"my_custom_action\", \"Description of what this action does\")\ndef my_custom_action(data: List[Dict]):\n    \"\"\"\n    Takes in records from Snowflake view and processes them how you want.\n    \n    Args:\n        data: List of records from Snowflake\n        \n    Returns:\n        Dictionary with action results\n    \"\"\"\n    # Your custom logic here\n    return {\"processed\": len(data)}",
+    "crumbs": [
+      "Home",
+      "TriggerKit"
+    ]
+  },
+  {
+    "objectID": "index copy.html#environment-variables",
+    "href": "index copy.html#environment-variables",
+    "title": "TriggerKit",
+    "section": "Environment Variables",
+    "text": "Environment Variables\n\nCONFIG_PATH: Path to the TOML configuration file\nSNOWFLAKE_PASSWORD: Snowflake password (recommended over storing in config)\nLOG_LEVEL: Set the logging level (DEBUG, INFO, WARNING, ERROR)",
+    "crumbs": [
+      "Home",
+      "TriggerKit"
+    ]
+  },
+  {
+    "objectID": "index copy.html#built-in-actions",
+    "href": "index copy.html#built-in-actions",
+    "title": "TriggerKit",
+    "section": "Built-in Actions",
     "text": "Built-in Actions\nThe system comes with several built-in actions:\n\nsend_alert: Sends email and Slack notifications\nlog_incident: Records incidents in a tracking system\ngenerate_report: Creates summary reports from data",
     "crumbs": [
+      "Home",
       "TriggerKit"
     ]
   }
