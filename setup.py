@@ -39,7 +39,7 @@ setup_cfg['package_data'] = package_data
 
 setuptools.setup(
     name = cfg['lib_name'],
-    license = lic[0],
+    license = None,
     classifiers = [
         'Development Status :: ' + statuses[int(cfg['status'])],
         'Intended Audience :: ' + cfg['audience'].title(),
