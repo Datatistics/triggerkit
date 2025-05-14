@@ -135,8 +135,11 @@ def create_job_from_view(data):
     """
     Create new jobs from views that have job configuration.
     """
+    util.logger.info(f"Creating jobs from views...")
+    util.logger.info(f'Data: {data}')
     for view in data:
-        view_data = get_view_data(view)
+        util.logger.info(f"Processing view: {view}")
+        view_data = get_view_data(view['table_name'])
         if not view_data:
             util.logger.warning(f"No data returned from view: {view}")
             continue
