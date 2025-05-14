@@ -153,8 +153,8 @@ def create_job_from_view(data):
         config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
 
         view_config = json.loads(first_row[config_col]);        util.logger.info(f'Config data: {view_config}')
-        name = view['TABLE_NAME'];                              util.logger.info(f'name: {name}')
-        view_name = view_config.get('view');                    util.logger.info(f'view_name: {view_name}')
+        name = view_config.get('name', view['TABLE_NAME']);     util.logger.info(f'name: {name}')
+        view_name = view_config.get('view',view['TABLE_NAME']); util.logger.info(f'view_name: {view_name}')
         actions = view_config.get('actions', []);               util.logger.info(f'actions: {actions}')
         schedule_str = view_config.get('schedule');             util.logger.info(f'schedule_str: {schedule_str}')
         enabled = view_config.get('enabled', True);             util.logger.info(f'enabled: {enabled}')
