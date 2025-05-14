@@ -7,7 +7,7 @@ database            = "${SNOWFLAKE_DATABASE}"
 schema              = "${SNOWFLAKE_SCHEMA}"
 check_schema        = "${SNOWFLAKE_SCHEMA}"
 schema_check_freq   = "every 15 minutes"
-role                = "${SNOWFLAKE_SCHEMA-ACCOUNTADMIN}"
+role                = "${SNOWFLAKE_ROLE-ACCOUNTADMIN}"
 
 [[views]]      
 name = "usage_spikes_view"

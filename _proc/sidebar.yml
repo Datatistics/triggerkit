@@ -14,6 +14,7 @@ website:
       - section: Explanations
         contents:
           - Explanations/about.ipynb
+          - Explanations/configurations.ipynb
       - section: Tutorials
         contents:
           - Tutorials/Getting Started.ipynb

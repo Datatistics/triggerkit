@@ -34,7 +34,7 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
         job_name = f"{view_name}_{'_'.join(action_names)}_job"
     
     def job():
-        util.logger.info(f"Running job '{job_name}'")
+        util.logger.info(f"Running job '{job_name}' ...")
         try:
             # Fetch data from view
             data = get_view_data(view_name)

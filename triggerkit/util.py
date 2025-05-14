@@ -14,7 +14,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
-logger = logging.getLogger('snowflake_actions')
+logger = logging.getLogger('triggerkit')
 
 # %% ../nbs/API/99_util.ipynb 5
 def _expand_eviron(config: Any) -> Any:

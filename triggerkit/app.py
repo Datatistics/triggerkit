@@ -89,15 +89,15 @@ def init(config_path: str):
         # General Job to add new views from schema
         config['jobs'].append({
             'name': 'Check Schema For Views',
-            'view': 'check_schema',
+            'view': 'tk_check_schema',
             'actions': 'Get DDL and Register Views',
             'schedule': config['snowflake']['schema_check_freq']
         })
 
         # Job to check schema for views with job configurations and create the jobs
         config['jobs'].append({
-            'name': 'Check Schema For Views',
-            'view': 'check_schema',
+            'name': 'Check Schema For Configured Views',
+            'view': 'tk_cofigured_views',
             'actions': ['Get DDL and Register Views','Create Job From View'],
             'schedule': config['snowflake']['schema_check_freq']
         })
