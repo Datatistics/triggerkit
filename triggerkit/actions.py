@@ -5,6 +5,8 @@ __all__ = ['send_slack_message', 'run_sql', 'register', 'list_available', 'get_i
 
 # %% ../nbs/API/01_actions.ipynb 2
 from . import util
+import functools
+import inspect
 from typing import Dict, List, Callable, Optional, Any, Union
 
 # %% ../nbs/API/01_actions.ipynb 6
@@ -55,7 +57,7 @@ def register(name: str, description: Optional[str] = None):
 def list_available():
     """List all registered actions with their descriptions."""
     print("Available actions:")
-    for name, fn in core.ACTION_REGISTRY.items():
+    for name, fn in util.ACTION_REGISTRY.items():
         description = getattr(fn, "_action_description", "No description available")
         print(f"  - {name}: {description}")
     return util.ACTION_REGISTRY

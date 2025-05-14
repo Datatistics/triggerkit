@@ -77,13 +77,26 @@ def init(config_path: str):
     snowflake_config = util.config.get('snowflake', {})
     util.snowflake_connection = snowflake.connect(snowflake_config)
     
-    # Register views from configuration file
-    for view_config in config.get('views', []):
-        snowflake.register_view(
-            view_config.get('name'),
-            view_config.get('query'),
-            {'description': view_config.get('description')}
-        )
+    # Register Views
+    snowflake.init_view_registry(config)
+
+    # Schedule Check Schema Jobs
+    if config['snowflake'].get('check_schema') and config['snowflake'].get('schema_check_freq'):
+        # General Job to add new views from schema
+        config['jobs'].append({
+            'name': 'Check Schema For Views',
+            'view': 'check_schema',
+            'actions': 'Get DDL and Register Views',
+            'schedule': config['snowflake']['schema_check_freq']
+        })
+
+        # Job to check schema for views with job configurations and create the jobs
+        config['jobs'].append({
+            'name': 'Check Schema For Views',
+            'view': 'check_schema',
+            'actions': ['Get DDL and Register Views','Create Job From View'],
+            'schedule': config['snowflake']['schema_check_freq']
+        })
     
     # Store config for other components to access
     util.config = config

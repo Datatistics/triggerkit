@@ -1,0 +1,28 @@
+[snowflake]
+user                = "${SNOWFLAKE_USER}"
+password            = "${SNOWFLAKE_PASSWORD}"
+account             = "${SNOWFLAKE_ACCOUNT}"
+warehouse           = "${SNOWFLAKE_WAREHOUSE}"
+database            = "${SNOWFLAKE_DATABASE}"
+schema              = "${SNOWFLAKE_SCHEMA}"
+check_schema        = "${SNOWFLAKE_SCHEMA}"
+schema_check_freq   = "every 15 minutes"
+role                = "${SNOWFLAKE_SCHEMA-ACCOUNTADMIN}"
+
+[[views]]      
+name = "usage_spikes_view"
+query = """
+    SELECT * FROM USAGE_SPIKES 
+    WHERE timestamp > DATEADD(hour, -1, CURRENT_TIMESTAMP())
+    AND severity IN ('HIGH', 'CRITICAL')
+"""
+description = "Significant usage spikes in the last hour"
+
+[[jobs]] # Locally Defined jobs
+name = "daily_reporting"
+view = "daily_summary_view"
+actions = ["generate_report"]
+schedule = "every 1 day"
+enabled = true
+# Can specify time of day as well
+run_at = "06:00"

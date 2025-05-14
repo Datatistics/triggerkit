@@ -6,8 +6,8 @@
 __all__ = ['logger', 'load_config']
 
 # %% ../nbs/API/99_util.ipynb 3
-import toml, logging
-from typing import Dict, List, Callable, Optional, Any, Union
+import toml, logging, re, os
+from typing import Dict, Any
 
 # %% ../nbs/API/99_util.ipynb 4
 logging.basicConfig(
@@ -17,20 +17,66 @@ logging.basicConfig(
 logger = logging.getLogger('snowflake_actions')
 
 # %% ../nbs/API/99_util.ipynb 5
+def _expand_eviron(config: Any) -> Any:
+    """
+    Recursively expand environment variables in a config structure.
+    Supports:
+    - ${VAR} and $VAR syntax for direct substitution
+    - ${VAR:-default} syntax for default values when VAR is not set
+    
+    Args:
+        config: Configuration object (dict, list, or primitive)
+        
+    Returns:
+        Config with environment variables expanded
+    """
+    if isinstance(config, dict):
+        return {k: _expand_eviron(v) for k, v in config.items()}
+    elif isinstance(config, list):
+        return [_expand_eviron(i) for i in config]
+    elif isinstance(config, str):
+        result = config
+        
+        default_pattern = r'\$\{([^}:]+):-([^}]*)\}'
+        
+        def replace_with_default(match):
+            env_var = match.group(1)
+            default_value = match.group(2)
+            return os.environ.get(env_var, default_value)
+        
+        result = re.sub(default_pattern, replace_with_default, result)
+        
+        std_pattern = r'\$\{([^}]+)\}|\$([a-zA-Z0-9_]+)'
+        
+        def replace_std_var(match):
+            env_var = match.group(1) or match.group(2)
+            return os.environ.get(env_var, '')
+        
+        result = re.sub(std_pattern, replace_std_var, result)
+        return result
+    else:
+        return config
+
+# %% ../nbs/API/99_util.ipynb 6
 def load_config(config_path: str) -> Dict[str, Any]:
     """
-    Load configuration from TOML file.
+    Load configuration from TOML file with environment variable interpolation.
     
     Args:
         config_path: Path to TOML config file
         
     Returns:
-        Dictionary containing configuration sections
+        Dictionary containing configuration sections with env vars expanded
     """
     try:
+        # Load the raw config first
         config = toml.load(config_path)
+        
+        # Expand environment variables
+        expanded_config = _expand_eviron(config)
+        
         logger.info(f"Successfully loaded config from {config_path}")
-        return config
+        return expanded_config
     except Exception as e:
         logger.error(f"Failed to load config: {str(e)}")
         raise
