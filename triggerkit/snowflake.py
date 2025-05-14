@@ -125,10 +125,10 @@ def get_view_data(view_name: str) -> List[Dict[str, Any]]:
         raise ValueError(f"View '{view_name}' is not registered")
     
     view_config = util.VIEW_REGISTRY[view_name]
-    query = view_config['query']
+    sql_query = view_config['query']
     
     try:
-        results = query(query)
+        results = query(sql_query)
         util.logger.info(f"Successfully executed query for view '{view_name}', returned {len(results)} rows")
         return results
     except Exception as e:

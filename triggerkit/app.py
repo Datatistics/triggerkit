@@ -173,7 +173,7 @@ def main(args=None):
     # Initialize and run the application
     try:
         logger.info("Starting Snowflake Action System")
-        init_app(args.config)
+        init(args.config)
     except KeyboardInterrupt:
         logger.info("Shutting down Snowflake Action System")
     except Exception as e:
