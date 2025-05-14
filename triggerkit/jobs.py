@@ -139,7 +139,7 @@ def create_job_from_view(data):
     util.logger.info(f'Data: {data}')
     for view in data:
         util.logger.info(f"Processing view: {view}")
-        view_data = get_view_data(view['table_name'])
+        view_data = get_view_data(view['TABLE_NAME'])
         if not view_data:
             util.logger.warning(f"No data returned from view: {view}")
             continue
