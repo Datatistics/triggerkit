@@ -35,8 +35,8 @@ def _parse_arguments(args=None):
     
     parser.add_argument(
         '-c', '--config',
-        default=os.environ.get('CONFIG_PATH', 'config.toml'),
-        help='Path to TOML configuration file (default: config.toml or CONFIG_PATH env var)'
+        default=os.environ.get('CONFIG_PATH', 'util.toml'),
+        help='Path to TOML configuration file (default: util.toml or CONFIG_PATH env var)'
     )
     
     parser.add_argument(
@@ -74,7 +74,7 @@ def init(config_path: str):
     config = util.load_config(config_path)
     
     # Connect to Snowflake
-    snowflake_config = util.config.get('snowflake', {})
+    snowflake_config = util.util.get('snowflake', {})
     util.snowflake_connection = snowflake.connect(snowflake_config)
     
     # Register Views
@@ -152,11 +152,11 @@ def main(args=None):
             logger.info(f"Configuration file is valid: {args.config}")
             
             # Display summary of configuration
-            logger.info(f"Found {len(config.get('views', []))} views")
-            logger.info(f"Found {len(config.get('jobs', []))} jobs")
+            logger.info(f"Found {len(util.get('views', []))} views")
+            logger.info(f"Found {len(util.get('jobs', []))} jobs")
             
             # Display enabled jobs
-            enabled_jobs = [j for j in config.get('jobs', []) if j.get('enabled', True)]
+            enabled_jobs = [j for j in util.get('jobs', []) if j.get('enabled', True)]
             logger.info(f"Enabled jobs ({len(enabled_jobs)}):")
             for job in enabled_jobs:
                 logger.info(f"  - {job.get('name')}: {job.get('view')} → {job.get('actions')} ({job.get('schedule')})")
