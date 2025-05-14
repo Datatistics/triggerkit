@@ -23,19 +23,18 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
     **Args:**
         \n • `view_name`: Name of the registered view
         \n • `action_names`: Name or list of names of registered actions
-        j\n • `job_name`: Optional name for the job
+        \n • `job_name`: Optional name for the job
         
     **Returns:**
         Job function
     """
-    if isinstance(action_names, str):
-        action_names = [action_names]
-    
-    if not job_name:
-        job_name = f"{view_name}_{'_'.join(action_names)}_job"
+    util.logger.info(f"Creating Job for '{view_name}'.")
+    if isinstance(action_names, str):   action_names = [action_names]
+    if not job_name:                    job_name = f"{view_name}_{'_'.join(action_names)}_job"
     
     def job():
         util.logger.info(f"Running job '{job_name}' ...")
+        print(f"🕚 Running job '{job_name}' ...")
         try:
             # Fetch data from view
             data = get_view_data(view_name)
@@ -46,12 +45,14 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
                 results[action_name] = run(action_name, data)
             
             util.logger.info(f"Job '{job_name}' completed successfully")
+            print(f"✅ '{job_name}' Finished!")
             return results
         except Exception as e:
             util.logger.error(f"Job '{job_name}' failed: {str(e)}")
             raise
     
     job.__name__ = job_name
+    util.logger.info(f"Job Function Created for '{view_name}'.")
     return job
 
 # %% ../nbs/API/02_jobs.ipynb 5
@@ -137,7 +138,7 @@ def create_job_from_view(data):
     Create new jobs from views that have job configuration.
     """
     util.logger.info(f"Creating jobs from views...")
-    util.logger.info(f'Data: {data}')
+    util.logger.debug(f'Data: {data}')
     for view in data:
         util.logger.info(f"Processing view: {view}")
         view_data = get_view_data(view['TABLE_NAME'])
@@ -149,31 +150,42 @@ def create_job_from_view(data):
             continue
 
         first_row = view_data[0]
-        util.logger.info(f"Found job configuration in first row: {first_row}")
+        util.logger.debug(f"Found job configuration in first row: {first_row}")
         config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
+        view_config = json.loads(first_row[config_col])
 
-        view_config = json.loads(first_row[config_col]);        util.logger.info(f'Config data: {view_config}')
-        name = view_config.get('name', view['TABLE_NAME']);     util.logger.info(f'name: {name}')
-        view_name = view_config.get('view',view['TABLE_NAME']); util.logger.info(f'view_name: {view_name}')
-        actions = view_config.get('actions', []);               util.logger.info(f'actions: {actions}')
-        schedule_str = view_config.get('schedule');             util.logger.info(f'schedule_str: {schedule_str}')
-        enabled = view_config.get('enabled', True);             util.logger.info(f'enabled: {enabled}')
-        run_at = view_config.get('run_at');                     util.logger.info(f'run_at: {run_at}')
+        util.logger.debug(f'Config data: {view_config}')
+        name = view_config.get('name', view['TABLE_NAME'])
+        view_name = view_config.get('view',view['TABLE_NAME'])
+        actions = view_config.get('actions', [])
+        schedule_str = view_config.get('schedule')          
+        enabled = view_config.get('enabled', True)
+        run_at = view_config.get('run_at')                     
         
         if not enabled:
             util.logger.info(f"Job '{name}' is disabled, skipping")
             continue
             
         if not all([view_name, actions, schedule_str]) and not all([name, actions, run_at]):
-            util.logger.warning(f"Skipping invalid job configuration: {view}")
+            util.logger.info(f"Skipping invalid job configuration: {view}")
+            util.logger.info(f"See debug for missing info.")
+            util.logger.debug(f"Config Values:")
+            util.logger.debug(f' - name: {name}')
+            util.logger.debug(f' - view_name: {view_name}')
+            util.logger.debug(f' - actions: {actions}')
+            util.logger.debug(f' - schedule_str: {schedule_str}')
+            util.logger.debug(f' - enabled: {enabled}')
+            util.logger.debug(f' - run_at: {run_at}')
             continue
         
         if name in util.SCHEDULED_JOBS and actions == util.SCHEDULED_JOBS[name]['actions'] and view_name == view and schedule_str == util.SCHEDULED_JOBS[name]['schedule_str'] and run_at == util.SCHEDULED_JOBS[name]['run_at']:
-            util.logger.warning(f"Job '{name}' already exists, skipping")
+            util.logger.info(f"Job '{name}' already exists, skipping")
             continue
+        
 
         job = create(view_name, actions, name)
-        
+
+        util.logger.info(f"Scheduling Job for '{name}")
         # Parse schedule string and set up schedule
         schedule_parts = schedule_str.split()
         if len(schedule_parts) >= 3 and schedule_parts[0] == "every":
