@@ -151,15 +151,14 @@ def create_job_from_view(data):
         first_row = view_data[0]
         util.logger.info(f"Found job configuration in first row: {first_row}")
         config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
-        view_config = json.loads(first_row[config_col])
-
-        util.logger.info(f'Config data: {view_config}')
-        name = view_config.get('name', view)
-        view_name = view_config.get('view')
-        actions = view_config.get('actions', [])
-        schedule_str = view_config.get('schedule')
-        enabled = view_config.get('enabled', True)
-        run_at = view_config.get('run_at')
+        
+        view_config = json.loads(first_row[config_col]);util.logger.info(f'Config data: {view_config}')
+        name = view_config.get('name', view);           util.logger.info(f'name: {name}')
+        view_name = view_config.get('view');            util.logger.info(f'view_name: {view_name}')
+        actions = view_config.get('actions', []);       util.logger.info(f'actions: {actions}')
+        schedule_str = view_config.get('schedule');     util.logger.info(f'schedule_str: {schedule_str}')
+        enabled = view_config.get('enabled', True);     util.logger.info(f'enabled: {enabled}')
+        run_at = view_config.get('run_at');             util.logger.info(f'run_at: {run_at}')
         
         if not enabled:
             util.logger.info(f"Job '{name}' is disabled, skipping")
