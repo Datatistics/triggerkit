@@ -50,7 +50,7 @@ def register(name: str, description: Optional[str] = None):
             return fn(*args, **kwargs)
         
         return wrapper
-    
+    util.logger.info(f"Registered action: {name}")
     return decorator
 
 # %% ../nbs/API/01_actions.ipynb 9
