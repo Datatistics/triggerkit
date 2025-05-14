@@ -10,6 +10,7 @@ import schedule
 from . import util
 from .snowflake import get_view_data
 from .actions import run, register
+from datetime import datetime, time as datetime_time
 from typing import Dict, List, Callable, Optional, Any, Union
 
 # %% ../nbs/API/02_jobs.ipynb 4
@@ -135,6 +136,10 @@ def create_job_from_view(data):
     """
     for view in data:
         view_data = get_view_data(view)
+        if not view_data:
+            util.logger.warning(f"No data returned from view: {view}")
+            continue
+
         first_row = view_data[0]
 
         config_col = 'config' if 'config' in first_row else 'tk_config'
