@@ -10,7 +10,6 @@ format:
 website:
   repo-url: https://github.com/Datatistics/triggerkit
   repo-subdir: nbs
-  repo-actions: [edit, issue]
   twitter-card: true
   open-graph: true
   repo-actions: [issue]

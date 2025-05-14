@@ -8,6 +8,8 @@ format:
     toc: true
 
 website:
+  repo-url: https://github.com/Datatistics/triggerkit
+  repo-subdir: nbs
   twitter-card: true
   open-graph: true
   repo-actions: [issue]

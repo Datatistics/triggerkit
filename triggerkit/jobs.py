@@ -146,7 +146,7 @@ def create_job_from_view(data):
 
         first_row = view_data[0]
 
-        config_col = 'config' if 'config' in first_row else 'tk_config'
+        config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
         
         name = first_row[config_col].get('name', view)
         view_name = first_row[config_col].get('view')
