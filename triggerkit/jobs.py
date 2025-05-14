@@ -143,9 +143,12 @@ def create_job_from_view(data):
         if not view_data:
             util.logger.warning(f"No data returned from view: {view}")
             continue
+        if 'CONFIG' not in view_data[0] and 'TK_CONFIG' not in view_data[0]:
+            util.logger.warning(f"No job configuration found in view: {view}")
+            continue
 
         first_row = view_data[0]
-
+        util.logger.info(f"Found job configuration in first row: {first_row}")
         config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
         
         name = first_row[config_col].get('name', view)
