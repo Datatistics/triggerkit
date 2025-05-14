@@ -46,7 +46,7 @@
     "href": "API/app.html",
     "title": "app",
     "section": "",
-    "text": "source\n\nmain\n\n main (args=None)\n\n*Main entry point for the application.\nArgs: args: Optional list of command line argument strings, or parsed args object. If None, will parse from command line.*",
+    "text": "source\n\nmain\n\n main (args=None)\n\n*Main entry point for the application.\nArgs:\n• args: Optional list of command line argument strings, or parsed args object.\n       If None, will parse from command line.*",
     "crumbs": [
       "Home",
       "API",
@@ -82,7 +82,7 @@
     "href": "API/actions.html#make-your-own-actions",
     "title": "actions",
     "section": "Make Your Own Actions",
-    "text": "Make Your Own Actions\nIt is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and register it with the system\n\nsource\n\nregister\n\n register (name:str, description:Optional[str]=None)\n\n*Register your function as an action in the global registry.\nArgs:\n• name: Descriptive name for your action\n• description: Optional description of what the action does\nRaises:\n• ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]])\n\n*Run a registered action with the provided data.\nArgs: action_name: Name of the registered action data: Data to pass to the action\nReturns: Result of the action*",
+    "text": "Make Your Own Actions\nIt is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and register it with the system\n\nsource\n\nregister\n\n register (name:str, description:Optional[str]=None)\n\n*Register your function as an action in the global registry.\nArgs:\n• name: Descriptive name for your action\n• description: Optional description of what the action does\nRaises:\n• ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]])\n\n*Run a registered action with the provided data.\nArgs:\n• action_name: Name of the registered action\n• data: Data to pass to the action\nReturns: Result of the action*",
     "crumbs": [
       "Home",
       "API",
@@ -149,7 +149,7 @@
     "href": "API/jobs.html",
     "title": "jobs",
     "section": "",
-    "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None)\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs: view_name: Name of the registered view action_names: Name or list of names of registered actions job_name: Optional name for the job\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs: config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\ncreate_job_from_view\n\n create_job_from_view (data)\n\nCreate new jobs from views that have job configuration.\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop.",
+    "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None)\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs:\n• view_name: Name of the registered view\n• action_names: Name or list of names of registered actions j • job_name: Optional name for the job\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs:\n• config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\ncreate_job_from_view\n\n create_job_from_view (data)\n\nCreate new jobs from views that have job configuration.\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop.",
     "crumbs": [
       "Home",
       "API",

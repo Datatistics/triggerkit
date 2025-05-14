@@ -20,12 +20,12 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
     """
     Create a job function that fetches data from a view and runs specified actions.
     
-    Args:
-        view_name: Name of the registered view
-        action_names: Name or list of names of registered actions
-        job_name: Optional name for the job
+    **Args:**
+        \n • `view_name`: Name of the registered view
+        \n • `action_names`: Name or list of names of registered actions
+        j\n • `job_name`: Optional name for the job
         
-    Returns:
+    **Returns:**
         Job function
     """
     if isinstance(action_names, str):
@@ -61,10 +61,10 @@ def schedule_jobs(config: Dict[str, Any]):
     """
     Schedule jobs based on TOML configuration.
     
-    Args:
-        config: Dictionary containing configuration sections
+    **Args:**
+        \n • `config:` Dictionary containing configuration sections
         
-    Returns:
+    **Returns:**
         None
     """
     jobs = config.get('jobs', [])
@@ -152,6 +152,8 @@ def create_job_from_view(data):
         util.logger.info(f"Found job configuration in first row: {first_row}")
         config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
         view_config = json.loads(first_row[config_col])
+
+        util.logger.info(f'Config data: {view_config}')
         name = view_config.get('name', view)
         view_name = view_config.get('view')
         actions = view_config.get('actions', [])

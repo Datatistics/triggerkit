@@ -64,10 +64,10 @@ def init(config_path: str):
     """
     Initialize the application.
     
-    Args:
-        config_path: Path to TOML config file
+    **Args:**
+        \n • `config_path`: Path to TOML config file
         
-    Returns:
+    **Returns:**
         None
     """
     # Load configuration
@@ -124,9 +124,9 @@ def init(config_path: str):
 def main(args=None):
     """Main entry point for the application.
     
-    Args:
-        args: Optional list of command line argument strings, or parsed args object.
-              If None, will parse from command line.
+    **Args:**
+        \n • `args`: Optional list of command line argument strings, or parsed args object.
+        \n \t    If None, will parse from command line.
     """
     if args is None or not isinstance(args, argparse.Namespace):
         args = _parse_arguments(args)

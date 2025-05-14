@@ -81,11 +81,11 @@ def run(action_name: str, data: List[Dict[str, Any]]) -> Any:
     """
     Run a registered action with the provided data.
     
-    Args:
-        action_name: Name of the registered action
-        data: Data to pass to the action
+    **Args:** 
+        \n • `action_name`: Name of the registered action
+        \n • `data`: Data to pass to the action
         
-    Returns:
+    **Returns:**
         Result of the action
     """
     if action_name not in util.ACTION_REGISTRY:
