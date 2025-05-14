@@ -1,1 +1,0 @@
-Sitemap: https://Datatistics.github.io/triggerkit/sitemap.xml

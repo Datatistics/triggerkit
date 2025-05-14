@@ -188,7 +188,7 @@ def create_job_from_view(data):
                         util.logger.warning(f"Invalid run_at time format: {run_at}, expected HH:MM. Using default.")
                 
                 scheduler.do(job)
-                util.logger.info(f"Scheduled job '{name}' for view '{view_name}' with actions {actions} to run {schedule_str}" + 
+                util.logger.info(f"AUTO SCHEDULED job '{name}' based on view '{view_name}' with actions {actions} to run {schedule_str}" + 
                            (f" at {run_at}" if run_at and unit in ('day', 'days') else ""))
                 util.SCHEDULED_JOBS[name] = {
                     'actions': actions,

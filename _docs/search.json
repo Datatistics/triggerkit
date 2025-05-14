@@ -2,61 +2,55 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "triggerkit",
+    "title": "TriggerKit",
     "section": "",
-    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit",
-    "crumbs": [
-      "triggerkit"
-    ]
+    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit"
   },
   {
     "objectID": "index.html#overview",
     "href": "index.html#overview",
-    "title": "triggerkit",
+    "title": "TriggerKit",
     "section": "",
-    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit",
-    "crumbs": [
-      "triggerkit"
-    ]
+    "text": "This system allows you to:\n\nDefine Snowflake views to monitor\nSchedule when to check these views for new data\nConfigure actions to trigger when data is available\nExtend with custom actions for your specific needs\n\n\n\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from pypi\n$ pip install triggerkit"
   },
   {
     "objectID": "index.html#usage",
     "href": "index.html#usage",
-    "title": "triggerkit",
+    "title": "TriggerKit",
     "section": "Usage",
-    "text": "Usage\nRun the system with your configuration file:\n# Using default config.toml in current directory\nsnowflake-actions\n\n# Or specify a config file\nsnowflake-actions --config /path/to/your/config.toml\n\n# To check your configuration file syntax\nsnowflake-actions --check-config\n\n# To list available actions\nsnowflake-actions --list-actions\n\n# For verbose logging\nsnowflake-actions --verbose",
-    "crumbs": [
-      "triggerkit"
-    ]
+    "text": "Usage\nRun the system with your configuration file:\n# Using default config.toml in current directory\nsnowflake-actions\n\n# Or specify a config file\nsnowflake-actions --config /path/to/your/config.toml\n\n# To check your configuration file syntax\nsnowflake-actions --check-config\n\n# To list available actions\nsnowflake-actions --list-actions\n\n# For verbose logging\nsnowflake-actions --verbose"
   },
   {
     "objectID": "index.html#creating-custom-actions",
     "href": "index.html#creating-custom-actions",
-    "title": "triggerkit",
+    "title": "TriggerKit",
     "section": "Creating Custom Actions",
-    "text": "Creating Custom Actions\nYou can extend the system with your own custom actions:\nfrom snowflake_action_framework import register\n\n@register(\"my_custom_action\", \"Description of what this action does\")\ndef my_custom_action(data):\n    \"\"\"\n    Process data from Snowflake and perform a custom action.\n    \n    Args:\n        data: List of records from Snowflake\n        \n    Returns:\n        Dictionary with action results\n    \"\"\"\n    # Your custom logic here\n    return {\"processed\": len(data)}",
-    "crumbs": [
-      "triggerkit"
-    ]
+    "text": "Creating Custom Actions\nYou can extend the system with your own custom actions:\nimport triggerkit as tk\n\n@tk.register(\"my_custom_action\", \"Description of what this action does\")\ndef my_custom_action(data: List[Dict]):\n    \"\"\"\n    Takes in records from Snowflake view and processes them how you want.\n    \n    Args:\n        data: List of records from Snowflake\n        \n    Returns:\n        Dictionary with action results\n    \"\"\"\n    # Your custom logic here\n    return {\"processed\": len(data)}"
   },
   {
     "objectID": "index.html#environment-variables",
     "href": "index.html#environment-variables",
-    "title": "triggerkit",
+    "title": "TriggerKit",
     "section": "Environment Variables",
-    "text": "Environment Variables\n\nCONFIG_PATH: Path to the TOML configuration file\nSNOWFLAKE_PASSWORD: Snowflake password (recommended over storing in config)\nLOG_LEVEL: Set the logging level (DEBUG, INFO, WARNING, ERROR)",
-    "crumbs": [
-      "triggerkit"
-    ]
+    "text": "Environment Variables\n\nCONFIG_PATH: Path to the TOML configuration file\nSNOWFLAKE_PASSWORD: Snowflake password (recommended over storing in config)\nLOG_LEVEL: Set the logging level (DEBUG, INFO, WARNING, ERROR)"
   },
   {
     "objectID": "index.html#built-in-actions",
     "href": "index.html#built-in-actions",
-    "title": "triggerkit",
+    "title": "TriggerKit",
     "section": "Built-in Actions",
-    "text": "Built-in Actions\nThe system comes with several built-in actions:\n\nsend_alert: Sends email and Slack notifications\nlog_incident: Records incidents in a tracking system\ngenerate_report: Creates summary reports from data",
+    "text": "Built-in Actions\nThe system comes with several built-in actions:\n\nsend_alert: Sends email and Slack notifications\nlog_incident: Records incidents in a tracking system\ngenerate_report: Creates summary reports from data"
+  },
+  {
+    "objectID": "API/app.html",
+    "href": "API/app.html",
+    "title": "app",
+    "section": "",
+    "text": "source\n\ninit\n\n init (config_path:str)\n\n*Initialize the application.\nArgs: config_path: Path to TOML config file\nReturns: None*",
     "crumbs": [
-      "triggerkit"
+      "Home",
+      "API",
+      "app"
     ]
   },
   {
@@ -64,10 +58,66 @@
     "href": "API/actions.html",
     "title": "actions",
     "section": "",
-    "text": "source\n\nregister\n\n register (name:str, description:Optional[str]=None)\n\n*Register a function as an action in the global registry.\nArgs: name: Unique identifier for the action description: Optional description of what the action does\nReturns: Decorator function that registers the decorated function\nRaises: ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]])\n\n*Run a registered action with the provided data.\nArgs: action_name: Name of the registered action data: Data to pass to the action\nReturns: Result of the action*",
+    "text": "When your views yields results, what TriggerKit performs are actions. These are functions that take in results and perform things like send slack messages, perform SQL operations, make API calls, etc.\nYou can either use some of our built-in actions or build your own!",
     "crumbs": [
+      "Home",
       "API",
       "actions"
+    ]
+  },
+  {
+    "objectID": "API/actions.html#built-in-actions",
+    "href": "API/actions.html#built-in-actions",
+    "title": "actions",
+    "section": "Built In Actions:",
+    "text": "Built In Actions:\n\nsource\n\nrun_sql\n\n run_sql (data)\n\n\nsource\n\n\nsend_slack_message\n\n send_slack_message (data)\n\nUse the returned data to send slack messages. This could be used for creating alerts for data issues, reporting on metrics, etc.",
+    "crumbs": [
+      "Home",
+      "API",
+      "actions"
+    ]
+  },
+  {
+    "objectID": "API/actions.html#make-your-own-actions",
+    "href": "API/actions.html#make-your-own-actions",
+    "title": "actions",
+    "section": "Make Your Own Actions",
+    "text": "Make Your Own Actions\nIt is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and register it with the system\n\nsource\n\nregister\n\n register (name:str, description:Optional[str]=None)\n\n*Register your function as an action in the global registry.\nArgs:\n• name: Descriptive name for your action\n• description: Optional description of what the action does\nRaises:\n• ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]])\n\n*Run a registered action with the provided data.\nArgs: action_name: Name of the registered action data: Data to pass to the action\nReturns: Result of the action*",
+    "crumbs": [
+      "Home",
+      "API",
+      "actions"
+    ]
+  },
+  {
+    "objectID": "API/database/snowflake.html",
+    "href": "API/database/snowflake.html",
+    "title": "snowflake",
+    "section": "",
+    "text": "source\n\nregister_view\n\n register_view (name:str, query:str,\n                metadata:Optional[Dict[str,Any]]=None)\n\n*Register a Snowflake view with the system.\nArgs: name: Name of the view query: SQL query or view name to fetch datay metadata: Additional metadata about the view\nReturns: None*\n\nsource\n\n\nregister_views\n\n register_views (data:List[Dict[str,Any]])\n\nRegisters all views in data with VIEW_REGISTRY.\n\nsource\n\n\nconnect\n\n connect (sf_config:Dict[str,Any])\n\n*Establish connection to Snowflake.\nArgs: sf_config: Dictionary containing Snowflake connection parameters\nReturns: Snowflake connection object*\n\nsource\n\n\nget_view_data\n\n get_view_data (view_name:str)\n\n*Execute a query for a registered view and return results.\nArgs: view_name: Name of the registered view\nReturns: List of result rows as dictionaries*\n\nsource\n\n\nquery\n\n query (sql_query:str)\n\n*Execute a query and return results.\nArgs: sql_query: SQL query to execute\nReturns: List of result rows as dictionaries*\n\nsource\n\n\nget_ddl_and_register\n\n get_ddl_and_register (data)\n\nFor each view in data, retrieve the DDL and register the view.\n\nsource\n\n\nextract_view_sql\n\n extract_view_sql (ddl:str)\n\n*Extracts the SQL query from a Snowflake view definition.\nArgs: ddl: Snowflake view definition\nReturns: Extracted SQL query*\n\nsource\n\n\ninit_view_registry\n\n init_view_registry (config:Dict[str,Any])\n\n*Starts View Registry by including all locally defined views and including all views located in the the schema defined in the configuration file.\nArgs: config: Dictionary containing view configurations\nReturns: None*"
+  },
+  {
+    "objectID": "Explanations/about.html",
+    "href": "Explanations/about.html",
+    "title": "What is TriggerKit?",
+    "section": "",
+    "text": "TriggerKit is a python package made to help you build smarter data system. It was designed to fill a need the creator saw, it can be hard to make data actionable. It shouldn’t be hard, or expensive, to keep people informed about issues or ___.\nEtiam congue quam eget velit convallis, eu sagittis orci vestibulum. Vestibulum at massa turpis. Curabitur ornare ex sed purus vulputate, vitae porta augue rhoncus. Phasellus auctor suscipit purus, vel ultricies nunc. Nunc eleifend nulla ac purus volutpat, id fringilla felis aliquet. Duis vitae porttitor nibh, in rhoncus risus. Vestibulum a est vitae est tristique vehicula. Proin mollis justo id est tempus hendrerit. Praesent suscipit placerat congue. Aliquam eu elit gravida, consequat augue non, ultricies sapien. Nunc ultricies viverra ante, sit amet vehicula ante volutpat id. Etiam tempus purus vitae tellus mollis viverra. Donec at ornare mauris. Aliquam sodales hendrerit ornare. Suspendisse accumsan lacinia sapien, sit amet imperdiet dui molestie ut.",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "What is TriggerKit?"
+    ]
+  },
+  {
+    "objectID": "Explanations/about.html#general-design",
+    "href": "Explanations/about.html#general-design",
+    "title": "What is TriggerKit?",
+    "section": "General Design",
+    "text": "General Design\nTriggerKit is pretty simple, you define a query or view that it should monitor, when it should check it, and what it should do if there are any results:\n\n\n\n\n\n---\ntitle: TriggerKit Design\n---\nflowchart LR\n  A[(Snowflake)] -- Results --&gt; B((TriggerKit))\n  B -..-&gt; C(Send Slack)\n  B -..-&gt; D(Run SQL)\n  B ---&gt; E(API Call)\n  B -..-&gt; F(Trigger DAG)",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "What is TriggerKit?"
     ]
   },
   {
@@ -75,51 +125,35 @@
     "href": "API/jobs.html",
     "title": "jobs",
     "section": "",
-    "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None)\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs: view_name: Name of the registered view action_names: Name or list of names of registered actions job_name: Optional name for the job\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs: config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop.",
+    "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None)\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs: view_name: Name of the registered view action_names: Name or list of names of registered actions job_name: Optional name for the job\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs: config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\ncreate_job_from_view\n\n create_job_from_view (data)\n\nCreate new jobs from views that have job configuration.\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop.",
     "crumbs": [
+      "Home",
       "API",
       "jobs"
     ]
   },
   {
-    "objectID": "API/core.html",
-    "href": "API/core.html",
-    "title": "core",
+    "objectID": "API/util.html",
+    "href": "API/util.html",
+    "title": "util",
     "section": "",
-    "text": "source\n\nload_config\n\n load_config (config_path:str)\n\n*Load configuration from TOML file.\nArgs: config_path: Path to TOML config file\nReturns: Dictionary containing configuration sections*",
+    "text": "source\n\nload_config\n\n load_config (config_path:str)\n\n*Load configuration from TOML file with environment variable interpolation.\nArgs: config_path: Path to TOML config file\nReturns: Dictionary containing configuration sections with env vars expanded*",
     "crumbs": [
+      "Home",
       "API",
-      "core"
+      "util"
     ]
   },
   {
-    "objectID": "API/database/snowflake.html",
-    "href": "API/database/snowflake.html",
-    "title": "core",
+    "objectID": "Tutorials/getting started.html",
+    "href": "Tutorials/getting started.html",
+    "title": "Getting Started",
     "section": "",
-    "text": "source\n\nregister_view\n\n register_view (name:str, query:str,\n                metadata:Optional[Dict[str,Any]]=None)\n\n*Register a Snowflake view with the system.\nArgs: name: Name of the view query: SQL query or view name to fetch datay metadata: Additional metadata about the view\nReturns: None*\n\nsource\n\n\nconnect\n\n connect (config:Dict[str,Any])\n\n*Establish connection to Snowflake.\nArgs: config: Dictionary containing Snowflake connection parameters\nReturns: Snowflake connection object*\n\nsource\n\n\nquery\n\n query (view_name:str)\n\n*Execute a query for a registered view and return results.\nArgs: view_name: Name of the registered view\nReturns: List of result rows as dictionaries*",
+    "text": "In this tutorial, we will show you how to use and setup TriggerKit!\n\n1. Download TriggerKit\nYou can either install latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from [pypi][pypi]\n$ pip install triggerkit\n\n\n2. Setup Database Connection\n\n\n\n\n\n\nNote\n\n\n\nTriggerKit runs off of defined queries and views. Right now, we only suport connections to Snowflake, but we may add support for other databases downt the line.\n\n\nYou can establish TriggerKit’s connection to your Snowflake through your config.toml file:\n[snowflake]\nuser = \"your_username\"\npassword = \"your_password\"  # Consider using environment variables for sensitive data\naccount = \"your_account\"\nwarehouse = \"your_warehouse\"\ndatabase = \"your_database\"\nschema = \"your_schema\"\nrole = \"ACCOUNTADMIN\"  # Optional, defaults to ACCOUNTADMIN (not ideal tho...)\n\n\n3. Create Your First Trigger and Action\nEtiam congue quam eget velit convallis, eu sagittis orci vestibulum. Vestibulum at massa turpis. Curabitur ornare ex sed purus vulputate, vitae porta augue rhoncus. Phasellus auctor suscipit purus, vel ultricies nunc. Nunc eleifend nulla ac purus volutpat, id fringilla felis aliquet. Duis vitae porttitor nibh, in rhoncus risus. Vestibulum a est vitae est tristique vehicula. Proin mollis justo id est tempus hendrerit. Praesent suscipit placerat congue. Aliquam eu elit gravida, consequat augue non, ultricies sapien. Nunc ultricies viverra ante, sit amet vehicula ante volutpat id. Etiam tempus purus vitae tellus mollis viverra. Donec at ornare mauris. Aliquam sodales hendrerit ornare. Suspendisse accumsan lacinia sapien, sit amet imperdiet dui molestie ut.",
     "crumbs": [
-      "API",
-      "database",
-      "core"
-    ]
-  },
-  {
-    "objectID": "API/schedule.html",
-    "href": "API/schedule.html",
-    "title": "Jobs",
-    "section": "",
-    "text": "source\n\nfoo\n\n foo ()\n\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop."
-  },
-  {
-    "objectID": "API/app.html",
-    "href": "API/app.html",
-    "title": "App",
-    "section": "",
-    "text": "source\n\ninit\n\n init (config_path:str)\n\n*Initialize the application.\nArgs: config_path: Path to TOML config file\nReturns: None*\n\n#exporti\n\ndef main(args=None):\n    \"\"\"Main entry point for the application.\n    \n    Args:\n        args: Optional list of command line argument strings, or parsed args object.\n              If None, will parse from command line.\n    \"\"\"\n    if args is None or not isinstance(args, argparse.Namespace):\n        args = _parse_arguments(args)\n    \n    # Set log level based on verbosity\n    if args.verbose:\n        logging.getLogger().setLevel(logging.DEBUG)\n        logger.debug(\"Verbose logging enabled\")\n    \n    # Check if config file exists\n    config_path = Path(args.config)\n    if not config_path.exists():\n        logger.error(f\"Configuration file not found: {config_path}\")\n        sys.exit(1)\n    \n    logger.info(f\"Using configuration file: {config_path}\")\n    \n    # Just list actions if requested\n    if args.list_actions:\n        list_available_actions()\n        sys.exit(0)\n    \n    # Just check config if requested\n    if args.check_config:\n        try:\n            config = core.load_config(args.config)\n            logger.info(f\"Configuration file is valid: {args.config}\")\n            \n            # Display summary of configuration\n            logger.info(f\"Found {len(config.get('views', []))} views\")\n            logger.info(f\"Found {len(config.get('jobs', []))} jobs\")\n            \n            # Display enabled jobs\n            enabled_jobs = [j for j in config.get('jobs', []) if j.get('enabled', True)]\n            logger.info(f\"Enabled jobs ({len(enabled_jobs)}):\")\n            for job in enabled_jobs:\n                logger.info(f\"  - {job.get('name')}: {job.get('view')} → {job.get('actions')} ({job.get('schedule')})\")\n            \n            sys.exit(0)\n        except Exception as e:\n            logger.error(f\"Error validating configuration: {str(e)}\")\n            sys.exit(1)\n    \n    # Initialize and run the application\n    try:\n        logger.info(\"Starting Snowflake Action System\")\n        init_app(args.config)\n    except KeyboardInterrupt:\n        logger.info(\"Shutting down Snowflake Action System\")\n    except Exception as e:\n        logger.error(f\"Application error: {str(e)}\", exc_info=True)\n        sys.exit(1)",
-    "crumbs": [
-      "API",
-      "App"
+      "Home",
+      "Tutorials",
+      "Getting Started"
     ]
   }
 ]

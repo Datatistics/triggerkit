@@ -2,30 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Datatistics.github.io/triggerkit/index.html</loc>
-    <lastmod>2025-05-11T16:49:49.143Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/actions.html</loc>
-    <lastmod>2025-05-11T18:34:25.715Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/jobs.html</loc>
-    <lastmod>2025-05-11T18:34:34.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/core.html</loc>
-    <lastmod>2025-05-11T17:00:37.410Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/database/snowflake.html</loc>
-    <lastmod>2025-05-11T16:49:49.567Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/schedule.html</loc>
-    <lastmod>2025-05-11T16:49:49.146Z</lastmod>
+    <lastmod>2025-05-12T19:56:15.271Z</lastmod>
   </url>
   <url>
     <loc>https://Datatistics.github.io/triggerkit/API/app.html</loc>
-    <lastmod>2025-05-11T18:33:12.734Z</lastmod>
+    <lastmod>2025-05-12T19:56:15.785Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/actions.html</loc>
+    <lastmod>2025-05-14T01:45:00.144Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/database/snowflake.html</loc>
+    <lastmod>2025-05-14T01:45:00.672Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/Explanations/about.html</loc>
+    <lastmod>2025-05-12T19:56:15.298Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/jobs.html</loc>
+    <lastmod>2025-05-14T01:45:00.647Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/util.html</loc>
+    <lastmod>2025-05-14T01:45:00.158Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/Tutorials/getting started.html</loc>
+    <lastmod>2025-05-12T19:56:15.413Z</lastmod>
   </url>
 </urlset>
