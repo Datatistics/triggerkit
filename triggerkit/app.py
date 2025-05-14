@@ -72,6 +72,8 @@ def init(config_path: str):
     """
     # Load configuration
     config = util.load_config(config_path)
+    util.config = config
+    util.SNOWFLAKE_CONFIG = config['snowflake']
     
     # Connect to Snowflake
     snowflake_config = config.get('snowflake', {})
