@@ -8,6 +8,7 @@ __all__ = ['create', 'schedule_jobs', 'create_job_from_view', 'run_scheduler']
 # %% ../nbs/API/02_jobs.ipynb 3
 import schedule
 from . import util
+import time
 from .snowflake import get_view_data
 from .actions import run, register
 from datetime import datetime, time as datetime_time
@@ -214,4 +215,4 @@ def run_scheduler():
     util.logger.info("Starting scheduler")
     while True:
         schedule.run_pending()
-        util.time.sleep(1)
+        time.sleep(1)
