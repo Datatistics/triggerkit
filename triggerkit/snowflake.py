@@ -149,7 +149,7 @@ def extract_view_sql(ddl: str) -> str:
 
     if 'CREATE' not in ddl.upper(): return ddl
     
-    ddl = ddl.strip()
+    ddl = ddl.strip().replace(';','')
 
     match = re.search(r'\bAS\b\s*(\()?[\s\n]*', ddl, flags=re.IGNORECASE)
     if match:
