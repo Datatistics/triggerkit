@@ -9,6 +9,7 @@ __all__ = ['create', 'schedule_jobs', 'create_job_from_view', 'run_scheduler']
 import schedule
 from . import util
 import time
+import json
 from .snowflake import get_view_data
 from .actions import run, register
 from datetime import datetime, time as datetime_time
@@ -150,13 +151,13 @@ def create_job_from_view(data):
         first_row = view_data[0]
         util.logger.info(f"Found job configuration in first row: {first_row}")
         config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
-        
-        name = first_row[config_col].get('name', view)
-        view_name = first_row[config_col].get('view')
-        actions = first_row[config_col].get('actions', [])
-        schedule_str = first_row[config_col].get('schedule')
-        enabled = first_row[config_col].get('enabled', True)
-        run_at = first_row[config_col].get('run_at')
+        view_config = json.loads(first_row[config_col])
+        name = view_config.get('name', view)
+        view_name = view_config.get('view')
+        actions = view_config.get('actions', [])
+        schedule_str = view_config.get('schedule')
+        enabled = view_config.get('enabled', True)
+        run_at = view_config.get('run_at')
         
         if not enabled:
             util.logger.info(f"Job '{name}' is disabled, skipping")
