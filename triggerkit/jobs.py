@@ -58,6 +58,7 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
     Returns:
         Job function
     """
+    # TODO: Add print statements
     if isinstance(action_names, str):
         action_names = [action_names]
     
@@ -244,13 +245,15 @@ def schedule_jobs(config: Dict[str, Any]):
             scheduler.add_job(
                 job_func,
                 trigger=trigger,
-                id=name,
+                id=view_name,
+                name=view_name,
                 replace_existing=True,
                 executor=executor,
                 misfire_grace_time=job_config.get('misfire_grace_time', 60),
                 max_instances=job_config.get('max_instances', 3)
             )
-            
+            # TODO: Add print statement 
+
             util.logger.info(f"Scheduled job '{name}' for view '{view_name}' with actions {actions} to run {schedule_description}")
             util.SCHEDULED_JOBS[name] = {
                 'actions': actions,
@@ -317,7 +320,7 @@ def create_job_from_view(data):
                     existing_job['view_name'] == view_name and 
                     existing_job['executor'] == executor):
                     util.logger.info(f"Job '{name}' already exists with same configuration, skipping")
-                    results[view] = "Job already exists with same configuration"
+                    results[view['TABLE_NAME']] = "Job already exists with same configuration"
                     continue
 
             job_func = create(view_name, actions, name, executor)
@@ -330,7 +333,8 @@ def create_job_from_view(data):
                 scheduler.add_job(
                     job_func,
                     trigger=trigger,
-                    id=name,
+                    id=view_name,
+                    name=view_name,
                     replace_existing=True,
                     executor=executor,
                     misfire_grace_time=view_config.get('misfire_grace_time', 60),
@@ -345,13 +349,13 @@ def create_job_from_view(data):
                     'executor': executor,
                     'enabled': True
                 }
-                results[view] = f"Successfully scheduled job '{name}'"
+                results[view_name] = f"Successfully scheduled job '{name}'"
             except ValueError as e:
-                util.logger.warning(f"Error scheduling job '{name}' from view '{view}': {e}")
-                results[view] = f"Error scheduling job: {str(e)}"
+                util.logger.warning(f"Error scheduling job '{name}' from view '{view_name}': {e}")
+                results[view_name] = f"Error scheduling job: {str(e)}"
         except Exception as e:
-            util.logger.error(f"Error processing view '{view}': {str(e)}")
-            results[view] = f"Error: {str(e)}"
+            util.logger.error(f"Error processing view '{view_name}': {str(e)}")
+            results[view_name] = f"Error: {str(e)}"
     
     return results
 

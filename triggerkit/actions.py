@@ -22,7 +22,7 @@ def run_sql(data):
 # %% ../nbs/API/01_actions.ipynb 8
 util.ACTION_REGISTRY: Dict[str, Callable] = {}
 
-def register(name: str, description: Optional[str] = None):
+def register(name: str, description: Optional[str] = None, overwrite: bool = False) -> Callable:
     """
     Register your function as an action in the global registry.
     
@@ -34,9 +34,14 @@ def register(name: str, description: Optional[str] = None):
        \n • `ValueError`: If an action with the same name already exists
     """
     def decorator(fn: Callable) -> Callable:
-        if name in util.ACTION_REGISTRY and util.ACTION_REGISTRY[name] != fn:
-            raise ValueError(f"An action named '{name}' is already registered.")
-        
+        if name in util.ACTION_REGISTRY and util.ACTION_REGISTRY[name] != fn and not overwrite:
+            util.logger.warning(f"Action '{name}' already exists. Keeping the existing one.")
+            return fn
+        if name in util.ACTION_REGISTRY and overwrite:
+            util.logger.warning(f"Overwriting existing action '{name}' with new one.")
+            # Remove the old action
+            del util.ACTION_REGISTRY[name]
+            
         # Add metadata to the function
         fn._action_name = name
         fn._action_description = description
