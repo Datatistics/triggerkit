@@ -23,6 +23,6 @@ name = "daily_reporting"
 view = "daily_summary_view"
 actions = ["generate_report"]
 schedule = "every 1 day"
-enabled = true
-# Can specify time of day as well
-run_at = "06:00"
+config:
+    report_format = "PDF"
+    report_folder = "/reports/daily"

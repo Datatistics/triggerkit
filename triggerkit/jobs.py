@@ -18,6 +18,7 @@ import time
 import logging
 import os
 import json
+from .shared_actions import SharedContext
 from .snowflake import get_view_data
 from .actions import run, register
 from datetime import datetime, time as datetime_time
@@ -45,7 +46,10 @@ scheduler = BackgroundScheduler(
 scheduler.add_jobstore(MemoryJobStore(), 'default')
 
 # %% ../nbs/API/02_jobs.ipynb 5
-def create(view_name: str, action_names: Union[str, List[str]], job_name: Optional[str] = None, executor: str = 'default'):
+def create(view_name: str, 
+           action_names: Union[str, List[str]], 
+           job_name: Optional[str] = None, 
+           executor: str = 'default'):
     """
     Create a job function that fetches data from a view and runs specified actions.
     
@@ -58,6 +62,7 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
     Returns:
         Job function
     """
+    # TODO: Add print statements
     if isinstance(action_names, str):
         action_names = [action_names]
     
@@ -73,8 +78,11 @@ def create(view_name: str, action_names: Union[str, List[str]], job_name: Option
             
             # Run each action
             results = {}
+            context = SharedContext()
             for action_name in action_names:
-                results[action_name] = run(action_name, data)
+                results[action_name] = run(action_name, data, context) # pass config?
+                context.clear_updates()
+                util.logger.debug(f"[context] '{action_name}' executed successfully.")
             
             execution_time = datetime.now() - start_time
             util.logger.info(f"Job '{job_name}' completed successfully in {execution_time.total_seconds():.2f}s")
@@ -244,13 +252,15 @@ def schedule_jobs(config: Dict[str, Any]):
             scheduler.add_job(
                 job_func,
                 trigger=trigger,
-                id=name,
+                id=view_name,
+                name=view_name,
                 replace_existing=True,
                 executor=executor,
                 misfire_grace_time=job_config.get('misfire_grace_time', 60),
                 max_instances=job_config.get('max_instances', 3)
             )
-            
+            # TODO: Add print statement 
+
             util.logger.info(f"Scheduled job '{name}' for view '{view_name}' with actions {actions} to run {schedule_description}")
             util.SCHEDULED_JOBS[name] = {
                 'actions': actions,
@@ -265,7 +275,7 @@ def schedule_jobs(config: Dict[str, Any]):
 
 # %% ../nbs/API/02_jobs.ipynb 8
 @register('Create Job From View','Creates scheduled jobs for views that have job configuration.')
-def create_job_from_view(data):
+def create_job_from_view(data, config, context):
     """
     Create new jobs from views that have job configuration.
     """
@@ -317,7 +327,7 @@ def create_job_from_view(data):
                     existing_job['view_name'] == view_name and 
                     existing_job['executor'] == executor):
                     util.logger.info(f"Job '{name}' already exists with same configuration, skipping")
-                    results[view] = "Job already exists with same configuration"
+                    results[view['TABLE_NAME']] = "Job already exists with same configuration"
                     continue
 
             job_func = create(view_name, actions, name, executor)
@@ -330,7 +340,8 @@ def create_job_from_view(data):
                 scheduler.add_job(
                     job_func,
                     trigger=trigger,
-                    id=name,
+                    id=view_name,
+                    name=view_name,
                     replace_existing=True,
                     executor=executor,
                     misfire_grace_time=view_config.get('misfire_grace_time', 60),
@@ -345,13 +356,13 @@ def create_job_from_view(data):
                     'executor': executor,
                     'enabled': True
                 }
-                results[view] = f"Successfully scheduled job '{name}'"
+                results[view_name] = f"Successfully scheduled job '{name}'"
             except ValueError as e:
-                util.logger.warning(f"Error scheduling job '{name}' from view '{view}': {e}")
-                results[view] = f"Error scheduling job: {str(e)}"
+                util.logger.warning(f"Error scheduling job '{name}' from view '{view_name}': {e}")
+                results[view_name] = f"Error scheduling job: {str(e)}"
         except Exception as e:
-            util.logger.error(f"Error processing view '{view}': {str(e)}")
-            results[view] = f"Error: {str(e)}"
+            util.logger.error(f"Error processing view '{view_name}': {str(e)}")
+            results[view_name] = f"Error: {str(e)}"
     
     return results
 

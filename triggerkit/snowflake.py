@@ -39,7 +39,7 @@ def register_view(name: str, query: str, metadata: Optional[Dict[str, Any]] = No
 
 # %% ../nbs/API/database/snowflake.ipynb 5
 @actions.register('Register Views','Registers all views in data with VIEW_REGISTRY.')
-def register_views(data: List[Dict[str, Any]]):
+def register_views(data: List[Dict[str, Any]], context, config):
     """
     Registers all views in data with VIEW_REGISTRY.
     """
@@ -176,7 +176,7 @@ def extract_view_sql(ddl: str) -> str:
     return sql
 
 @actions.register('Get DDL and Register Views','Given view names, it will retrieve the views\' definition and register the views.')
-def get_ddl_and_register(data):
+def get_ddl_and_register(data, context, config):
     """
     For each view in data, retrieve the DDL and register the view. 
     """
