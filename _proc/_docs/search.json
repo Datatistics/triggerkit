@@ -54,6 +54,85 @@
     ]
   },
   {
+    "objectID": "API/util.html",
+    "href": "API/util.html",
+    "title": "util",
+    "section": "",
+    "text": "source\n\nload_config\n\n load_config (config_path:str)\n\n*Load configuration from TOML file with environment variable interpolation.\nArgs: config_path: Path to TOML config file\nReturns: Dictionary containing configuration sections with env vars expanded*",
+    "crumbs": [
+      "Home",
+      "API",
+      "util"
+    ]
+  },
+  {
+    "objectID": "API/jobs.html",
+    "href": "API/jobs.html",
+    "title": "jobs",
+    "section": "",
+    "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None, executor:str='default')\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs: view_name: Name of the registered view action_names: Name or list of names of registered actions job_name: Optional name for the job executor: Name of the executor to use (‘default’ for thread pool, ‘processpool’ for process pool)\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs: config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\ncreate_job_from_view\n\n create_job_from_view (data, config, context)\n\nCreate new jobs from views that have job configuration.\n\nsource\n\n\nremove_job\n\n remove_job (job_id:str)\n\n*Remove a scheduled job.\nArgs: job_id: Job ID to remove\nReturns: Dictionary with operation result*\n\nsource\n\n\nresume_job\n\n resume_job (job_id:str)\n\n*Resume a paused job.\nArgs: job_id: Job ID to resume\nReturns: Dictionary with operation result*\n\nsource\n\n\npause_job\n\n pause_job (job_id:str)\n\n*Pause a scheduled job.\nArgs: job_id: Job ID to pause\nReturns: Dictionary with operation result*\n\nsource\n\n\nget_job_info\n\n get_job_info (job_id:Optional[str]=None)\n\n*Get information about scheduled jobs.\nArgs: job_id: Optional job ID to get specific job info\nReturns: Dictionary with job information*\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\n*Run the scheduler in the background.\nReturns: None*",
+    "crumbs": [
+      "Home",
+      "API",
+      "jobs"
+    ]
+  },
+  {
+    "objectID": "Explanations/about.html",
+    "href": "Explanations/about.html",
+    "title": "What is TriggerKit?",
+    "section": "",
+    "text": "TriggerKit is a python package made to help you build smarter data system. It was designed to fill a need the creator saw, it can be hard to make data actionable. It shouldn’t be hard, or expensive, to keep people informed about issues or ___.\nDuis ornare ex ac iaculis pretium. Maecenas sagittis odio id erat pharetra, sit amet consectetur quam sollicitudin. Vivamus pharetra quam purus, nec sagittis risus pretium at. Nullam feugiat, turpis ac accumsan interdum, sem tellus blandit neque, id vulputate diam quam semper nisl. Donec sit amet enim at neque porttitor aliquet. Phasellus facilisis nulla eget placerat eleifend. Vestibulum non egestas eros, eget lobortis ipsum. Nulla rutrum massa eget enim aliquam, id porttitor erat luctus. Nunc sagittis quis eros eu sagittis. Pellentesque dictum, erat at pellentesque sollicitudin, justo augue pulvinar metus, quis rutrum est mi nec felis. Vestibulum efficitur mi lorem, at elementum purus tincidunt a. Aliquam finibus enim magna, vitae pellentesque erat faucibus at. Nulla mauris tellus, imperdiet id lobortis et, dignissim condimentum ipsum. Morbi nulla orci, varius at aliquet sed, facilisis id tortor. Donec ut urna nisi.",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "What is TriggerKit?"
+    ]
+  },
+  {
+    "objectID": "Explanations/about.html#general-design",
+    "href": "Explanations/about.html#general-design",
+    "title": "What is TriggerKit?",
+    "section": "General Design",
+    "text": "General Design\nTriggerKit is pretty simple, you define a query or view that it should monitor, when it should check it, and what it should do if there are any results:\n\n\n\n\n\n---\ntitle: TriggerKit Design\n---\nflowchart LR\n  A[(Snowflake)] -- Results --&gt; B((TriggerKit))\n  B -..-&gt; C(Send Slack)\n  B -..-&gt; D(Run SQL)\n  B ---&gt; E(API Call)\n  B -..-&gt; F(Trigger DAG)",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "What is TriggerKit?"
+    ]
+  },
+  {
+    "objectID": "Explanations/configurations.html#view-configuration",
+    "href": "Explanations/configurations.html#view-configuration",
+    "title": "Configuration Options",
+    "section": "View Configuration",
+    "text": "View Configuration",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "Configuration Options"
+    ]
+  },
+  {
+    "objectID": "Explanations/configurations.html#job-configuration",
+    "href": "Explanations/configurations.html#job-configuration",
+    "title": "Configuration Options",
+    "section": "Job Configuration",
+    "text": "Job Configuration",
+    "crumbs": [
+      "Home",
+      "Explanations",
+      "Configuration Options"
+    ]
+  },
+  {
+    "objectID": "API/database/snowflake.html",
+    "href": "API/database/snowflake.html",
+    "title": "snowflake",
+    "section": "",
+    "text": "source\n\nregister_view\n\n register_view (name:str, query:str,\n                metadata:Optional[Dict[str,Any]]=None)\n\n*Register a Snowflake view with the system.\nArgs: name: Name of the view query: SQL query or view name to fetch datay metadata: Additional metadata about the view\nReturns: None*\n\nsource\n\n\nregister_views\n\n register_views (data:List[Dict[str,Any]], context, config)\n\nRegisters all views in data with VIEW_REGISTRY.\n\nsource\n\n\nconnect\n\n connect (sf_config:Dict[str,Any])\n\n*Establish connection to Snowflake.\nArgs: sf_config: Dictionary containing Snowflake connection parameters\nReturns: Snowflake connection object*\n\nsource\n\n\nget_view_data\n\n get_view_data (view_name:str)\n\n*Execute a query for a registered view and return results.\nArgs: view_name: Name of the registered view\nReturns: List of result rows as dictionaries*\n\nsource\n\n\nquery\n\n query (sql_query:str)\n\n*Execute a query and return results.\nArgs: sql_query: SQL query to execute\nReturns: List of result rows as dictionaries*\n\nsource\n\n\nget_ddl_and_register\n\n get_ddl_and_register (data, context, config)\n\nFor each view in data, retrieve the DDL and register the view.\n\nsource\n\n\nextract_view_sql\n\n extract_view_sql (ddl:str)\n\n*Extracts the SQL query from a Snowflake view definition.\nArgs: ddl: Snowflake view definition\nReturns: Extracted SQL query*\n\nsource\n\n\ninit_view_registry\n\n init_view_registry (config:Dict[str,Any])\n\n*Starts View Registry by including all locally defined views and including all views located in the the schema defined in the configuration file.\nArgs: config: Dictionary containing view configurations\nReturns: None*"
+  },
+  {
     "objectID": "API/actions.html",
     "href": "API/actions.html",
     "title": "actions",
@@ -82,7 +161,7 @@
     "href": "API/actions.html#make-your-own-actions",
     "title": "actions",
     "section": "Make Your Own Actions",
-    "text": "Make Your Own Actions\nIt is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and register it with the system\n\nsource\n\nregister\n\n register (name:str, description:Optional[str]=None)\n\n*Register your function as an action in the global registry.\nArgs:\n• name: Descriptive name for your action\n• description: Optional description of what the action does\nRaises:\n• ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]])\n\n*Run a registered action with the provided data.\nArgs:\n• action_name: Name of the registered action\n• data: Data to pass to the action\nReturns: Result of the action*",
+    "text": "Make Your Own Actions\nIt is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and register it with the system\nExample action:\n```python from triggerkit import register\n@register(‘My Action’,‘Does something I want’) def my_action( data: List[Dict], # List of results from the view context: Dict[str, Any], # Shared context between actions config: Dict[str, Any], # Config for the action - Passes job-specific parameters (e.g. thresholds, channel IDs) job_name: str, # (Optional) Name of the job - Helpful for logging, auditing, and debugging run_id: str, # (Optional) Unqiue ID of the run - Useful for traceability in logs, alerts, and audits **kwargs ) -&gt; Dict[str, Any]: …\n\nsource\n\nregister\n\n register (name:str, description:Optional[str]=None, overwrite:bool=False)\n\n*Register your function as an action in the global registry.\nArgs:\n• name: Descriptive name for your action\n• description: Optional description of what the action does\nRaises:\n• ValueError: If an action with the same name already exists*\n\nsource\n\n\nget_info\n\n get_info (name:str)\n\nGet detailed information about a specific action.\n\nsource\n\n\nlist_available\n\n list_available ()\n\nList all registered actions with their descriptions.\n\nsource\n\n\nrun\n\n run (action_name:str, data:List[Dict[str,Any]],\n      context:Optional[Dict[str,Any]]=None,\n      config:Optional[Dict[str,Any]]=None, job_name:Optional[str]=None,\n      dry_run:Optional[bool]=False)\n\n*Run a registered action with the provided data.\nArgs:\n• action_name: Name of the registered action\n• data: Data to pass to the action\nReturns: Result of the action*",
     "crumbs": [
       "Home",
       "API",
@@ -90,82 +169,15 @@
     ]
   },
   {
-    "objectID": "API/database/snowflake.html",
-    "href": "API/database/snowflake.html",
-    "title": "snowflake",
+    "objectID": "API/shared_context.html",
+    "href": "API/shared_context.html",
+    "title": "shared_context",
     "section": "",
-    "text": "source\n\nregister_view\n\n register_view (name:str, query:str,\n                metadata:Optional[Dict[str,Any]]=None)\n\n*Register a Snowflake view with the system.\nArgs: name: Name of the view query: SQL query or view name to fetch datay metadata: Additional metadata about the view\nReturns: None*\n\nsource\n\n\nregister_views\n\n register_views (data:List[Dict[str,Any]])\n\nRegisters all views in data with VIEW_REGISTRY.\n\nsource\n\n\nconnect\n\n connect (sf_config:Dict[str,Any])\n\n*Establish connection to Snowflake.\nArgs: sf_config: Dictionary containing Snowflake connection parameters\nReturns: Snowflake connection object*\n\nsource\n\n\nget_view_data\n\n get_view_data (view_name:str)\n\n*Execute a query for a registered view and return results.\nArgs: view_name: Name of the registered view\nReturns: List of result rows as dictionaries*\n\nsource\n\n\nquery\n\n query (sql_query:str)\n\n*Execute a query and return results.\nArgs: sql_query: SQL query to execute\nReturns: List of result rows as dictionaries*\n\nsource\n\n\nget_ddl_and_register\n\n get_ddl_and_register (data)\n\nFor each view in data, retrieve the DDL and register the view.\n\nsource\n\n\nextract_view_sql\n\n extract_view_sql (ddl:str)\n\n*Extracts the SQL query from a Snowflake view definition.\nArgs: ddl: Snowflake view definition\nReturns: Extracted SQL query*\n\nsource\n\n\ninit_view_registry\n\n init_view_registry (config:Dict[str,Any])\n\n*Starts View Registry by including all locally defined views and including all views located in the the schema defined in the configuration file.\nArgs: config: Dictionary containing view configurations\nReturns: None*"
-  },
-  {
-    "objectID": "Explanations/configurations.html#view-configuration",
-    "href": "Explanations/configurations.html#view-configuration",
-    "title": "Configuration Options",
-    "section": "View Configuration",
-    "text": "View Configuration",
-    "crumbs": [
-      "Home",
-      "Explanations",
-      "Configuration Options"
-    ]
-  },
-  {
-    "objectID": "Explanations/configurations.html#job-configuration",
-    "href": "Explanations/configurations.html#job-configuration",
-    "title": "Configuration Options",
-    "section": "Job Configuration",
-    "text": "Job Configuration",
-    "crumbs": [
-      "Home",
-      "Explanations",
-      "Configuration Options"
-    ]
-  },
-  {
-    "objectID": "Explanations/about.html",
-    "href": "Explanations/about.html",
-    "title": "What is TriggerKit?",
-    "section": "",
-    "text": "TriggerKit is a python package made to help you build smarter data system. It was designed to fill a need the creator saw, it can be hard to make data actionable. It shouldn’t be hard, or expensive, to keep people informed about issues or ___.\nEtiam non efficitur urna, quis elementum nisi. Mauris posuere a augue vel gravida. Praesent luctus erat et ex iaculis interdum. Nulla vestibulum quam ac nunc consequat vulputate. Nullam iaculis lobortis sem sit amet fringilla. Aliquam semper, metus ut blandit semper, nulla velit fermentum sapien, fermentum ultrices dolor sapien sed leo. Vestibulum molestie faucibus magna, at feugiat nulla ullamcorper a. Aliquam erat volutpat. Praesent scelerisque magna a justo maximus, sit amet suscipit mauris tempor. Nulla nec dolor eget ipsum pellentesque lobortis a in ipsum. Morbi turpis turpis, fringilla a eleifend maximus, viverra nec neque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
-    "crumbs": [
-      "Home",
-      "Explanations",
-      "What is TriggerKit?"
-    ]
-  },
-  {
-    "objectID": "Explanations/about.html#general-design",
-    "href": "Explanations/about.html#general-design",
-    "title": "What is TriggerKit?",
-    "section": "General Design",
-    "text": "General Design\nTriggerKit is pretty simple, you define a query or view that it should monitor, when it should check it, and what it should do if there are any results:\n\n\n\n\n\n---\ntitle: TriggerKit Design\n---\nflowchart LR\n  A[(Snowflake)] -- Results --&gt; B((TriggerKit))\n  B -..-&gt; C(Send Slack)\n  B -..-&gt; D(Run SQL)\n  B ---&gt; E(API Call)\n  B -..-&gt; F(Trigger DAG)",
-    "crumbs": [
-      "Home",
-      "Explanations",
-      "What is TriggerKit?"
-    ]
-  },
-  {
-    "objectID": "API/jobs.html",
-    "href": "API/jobs.html",
-    "title": "jobs",
-    "section": "",
-    "text": "source\n\ncreate\n\n create (view_name:str, action_names:Union[str,List[str]],\n         job_name:Optional[str]=None)\n\n*Create a job function that fetches data from a view and runs specified actions.\nArgs:\n• view_name: Name of the registered view\n• action_names: Name or list of names of registered actions j • job_name: Optional name for the job\nReturns: Job function*\n\nsource\n\n\nschedule_jobs\n\n schedule_jobs (config:Dict[str,Any])\n\n*Schedule jobs based on TOML configuration.\nArgs:\n• config: Dictionary containing configuration sections\nReturns: None*\n\nsource\n\n\ncreate_job_from_view\n\n create_job_from_view (data)\n\nCreate new jobs from views that have job configuration.\n\nsource\n\n\nrun_scheduler\n\n run_scheduler ()\n\nRun the scheduler loop.",
+    "text": "We should facilitate the sharing of information between actions. This is a common need in many applications, and we can achieve this by using a shared context.\nTo achieve this, we can create a SharedContext class that will hold the shared information. This class will be responsible for storing and retrieving the information as needed.\n\nsource\n\nSharedContext\n\n SharedContext (base:Dict[str,Any]=None)\n\nA dictionary-like object that allows sharing of context between different parts of a program. It is designed to be used as a singleton, ensuring that all parts of the program share the same context.\nFor example, a TriggerKit user might want their create a google sheet and then refrence sheet’s id in a later action. This can be done by storing the sheet id in the shared context after creating the sheet, and then retrieving it in the next action.\n\nexample = SharedContext()\nexample['sheet_id'] = '1B34VeLhAnujcnDO1Q8mcTsgDW42Q2nZBEA8mWOLFiPE'\n\nprint(example['sheet_id'])\n\n1B34VeLhAnujcnDO1Q8mcTsgDW42Q2nZBEA8mWOLFiPE\n\n\nLet’s also setup how SharedContext is represented and allow users to check if a key exists in the context. This will be useful for checking if a certain piece of information has been set before trying to use it.\n\nsource\n\n\nSharedContext.__repr__\n\n SharedContext.__repr__ ()\n\nReturn repr(self).\n\nsource\n\n\nSharedContext.__contains__\n\n SharedContext.__contains__ (key)\n\n\n'sheet_id' in example\n\nTrue\n\n\n\nprint(example)\n\nSharedContext - 1 items:\n1. sheet_id : 1B34VeLhAnujcnDO1Q8mcTsgDW42Q2nZBEA8mWOLFiPE\n\n\nMaybe the user also chains in a function that looks for what emails to share the sheet with and wants to store the result in the shared context as well\n\nexample.emails = ['cO8dD@example.com', 'hYh0q@example.com']\n\nprint(example.emails)\n\n['cO8dD@example.com', 'hYh0q@example.com']\n\n\nWe might want a way to see what value pairs are added by actions, so let’s add a way to check what values a action added during it’s run. This could be a simple dictionary that get’s cleared after each action run. This will allow us to see what values were added by each action, and we can use this information to debug any issues that may arise.\n\nsource\n\n\nSharedContext.clear_updates\n\n SharedContext.clear_updates ()\n\nClears the updates made during this run.\n\nsource\n\n\nSharedContext.updates\n\n SharedContext.updates ()\n\nReturns the subset of keys written during this run.\nNow, let’s see if the updates method works. This method could be called by the action runner to update the shared context with new information. The method should take a dictionary as an argument and update the shared context with the new values.\n\nexample.updates()\n\n{'sheet_id': '1B34VeLhAnujcnDO1Q8mcTsgDW42Q2nZBEA8mWOLFiPE',\n 'emails': ['cO8dD@example.com', 'hYh0q@example.com']}\n\n\nThat looks good! What about the clear method? This method should be called by the action runner to clear the log of what is added between runs.\n\nexample.clear_updates()\nprint(example.updates())\n\n{}\n\n\nPerfect! Looks like things are working as expected.",
     "crumbs": [
       "Home",
       "API",
-      "jobs"
-    ]
-  },
-  {
-    "objectID": "API/util.html",
-    "href": "API/util.html",
-    "title": "util",
-    "section": "",
-    "text": "source\n\nload_config\n\n load_config (config_path:str)\n\n*Load configuration from TOML file with environment variable interpolation.\nArgs: config_path: Path to TOML config file\nReturns: Dictionary containing configuration sections with env vars expanded*",
-    "crumbs": [
-      "Home",
-      "API",
-      "util"
+      "shared_context"
     ]
   },
   {
@@ -173,7 +185,7 @@
     "href": "Tutorials/getting started.html",
     "title": "Getting Started",
     "section": "",
-    "text": "In this tutorial, we will show you how to use and setup TriggerKit!\n\n1. Download TriggerKit\nYou can either install latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from [pypi][pypi]\n$ pip install triggerkit\n\n\n2. Setup Database Connection\n\n\n\n\n\n\nImportant\n\n\n\nRight now, TriggerKit only suports connections to Snowflake, but we may add support for other databases downt the line.\n\n\nYou can establish TriggerKit’s connection to your Snowflake through your config.toml file:\n[snowflake]\nuser = \"your_username\"\npassword = \"${SNOWFLAKE_PASSWORD}\"  # Use $ or ${} to import enviromental variables\naccount = \"your_account\"\nwarehouse = \"your_warehouse\"\ndatabase = \"your_database\"\nschema = \"your_schema\"\nrole = \"${SNOWFLAKE_ROLE-ACCOUNTADMIN}\" # You can also set defaults using a \"-\" i.e. ${ENVIRON-defualt_value}\nIf you would like TriggerKit to automatically import all of the views in a schema on startup, you can specify check_schema. To have it recheck this schema periodically, you can also specify schema_check_freq and triggerkit will create a job for itself to import any new views in the schema as views you can create jobs/actions for.\n\n[snowflake]\n...\ncheck_schema        = \"TK_ACTIONS\"              # Name of whatever schema you want to use\nschema_check_freq   = \"every 15 minutes\"        # How often you would like TK to recheck the schedma\n\n\n\n\n\n\nNote\n\n\n\nWe recommend setting up since it makes configuring TriggerKikt easier. For the rest of this tutorial, we will assume that you’ve taken advatage of this feature, but you can also configure the views isued bellow as shown in the example_config file\n\n\n\n\n3. Create Your First Trigger and Action\nVestibulum ultrices, tortor at mattis porta, odio nisi rutrum nulla, sit amet tincidunt eros quam facilisis tellus. Fusce eleifend lectus in elementum lacinia. Nam auctor nunc in massa ullamcorper, sit amet auctor ante accumsan. Nam ut varius metus. Curabitur eget tristique leo. Cras finibus euismod erat eget elementum. Integer vel placerat ex. Ut id eros quis lectus lacinia venenatis hendrerit vel ante.",
+    "text": "In this tutorial, we will show you how to use and setup TriggerKit!\n\n1. Download TriggerKit\nYou can either install latest from the GitHub repository:\n$ pip install git+https://github.com/Datatistics/triggerkit.git\nor from [pypi][pypi]\n$ pip install triggerkit\n\n\n2. Setup Database Connection\n\n\n\n\n\n\nImportant\n\n\n\nRight now, TriggerKit only suports connections to Snowflake, but we may add support for other databases downt the line.\n\n\nYou can establish TriggerKit’s connection to your Snowflake through your config.toml file:\n[snowflake]\nuser = \"your_username\"\npassword = \"${SNOWFLAKE_PASSWORD}\"  # Use $ or ${} to import enviromental variables\naccount = \"your_account\"\nwarehouse = \"your_warehouse\"\ndatabase = \"your_database\"\nschema = \"your_schema\"\nrole = \"${SNOWFLAKE_ROLE-ACCOUNTADMIN}\" # You can also set defaults using a \"-\" i.e. ${ENVIRON-defualt_value}\nIf you would like TriggerKit to automatically import all of the views in a schema on startup, you can specify check_schema. To have it recheck this schema periodically, you can also specify schema_check_freq and triggerkit will create a job for itself to import any new views in the schema as views you can create jobs/actions for.\n\n[snowflake]\n...\ncheck_schema        = \"TK_ACTIONS\"              # Name of whatever schema you want to use\nschema_check_freq   = \"every 15 minutes\"        # How often you would like TK to recheck the schedma\n\n\n\n\n\n\nNote\n\n\n\nWe recommend setting up since it makes configuring TriggerKikt easier. For the rest of this tutorial, we will assume that you’ve taken advatage of this feature, but you can also configure the views isued bellow as shown in the example_config file\n\n\n\n\n3. Create Your First Trigger and Action\nMaecenas turpis velit, ultricies non elementum vel, luctus nec nunc. Nulla a diam interdum, faucibus sapien viverra, finibus metus. Donec non tortor diam. In ut elit aliquet, bibendum sem et, aliquam tortor. Donec congue, sem at rhoncus ultrices, nunc augue cursus erat, quis porttitor mauris libero ut ex. Nullam quis leo urna. Donec faucibus ligula eget pellentesque interdum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean rhoncus interdum erat ut ultricies. Aenean tempus ex non elit suscipit, quis dignissim enim efficitur. Proin laoreet enim massa, vitae laoreet nulla mollis quis.",
     "crumbs": [
       "Home",
       "Tutorials",

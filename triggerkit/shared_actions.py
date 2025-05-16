@@ -61,33 +61,23 @@ class SharedContext(MutableMapping):
         return self._data.get(key)
 
 
-# %% ../nbs/API/04_shared_context.ipynb 8
+# %% ../nbs/API/04_shared_context.ipynb 10
 @patch
 def __contains__(self: SharedContext, key):
     return key in self._data
 
 @patch
 def __repr__(self: SharedContext):
-    return f"SharedContext({self._data})"
-
-@patch
-def __str__(self: SharedContext):
-    return f"SharedContext({self._data})"
-
-@patch
-def __eq__(self: SharedContext, other):
-    if isinstance(other, SharedContext):
-        return self._data == other._data
-    return False
-
-@patch
-def __ne__(self: SharedContext, other):
-    if isinstance(other, SharedContext):
-        return self._data != other._data
-    return True
+    lines = [f"SharedContext - {len(self._data)} items:"]
+    max_key_length = max(len(k) for k in self._data.keys()) if self._data else 0
+    n = 1
+    for k in self._data.keys():
+        lines.append(f"{n}. {k.ljust(max_key_length)} : {self._data[k]}"); n += 1
+    return "\n".join(lines)
 
 
-# %% ../nbs/API/04_shared_context.ipynb 14
+
+# %% ../nbs/API/04_shared_context.ipynb 16
 @patch
 def updates(self: SharedContext) -> Dict[str, Any]:
     """Returns the subset of keys written during this run."""

@@ -194,6 +194,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../API/shared_context.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">shared_context</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../API/util.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">util</span></a>
   </div>
@@ -266,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="register_views" class="level3">
 <h3 class="anchored" data-anchor-id="register_views">register_views</h3>
 <blockquote class="blockquote">
-<pre><code> register_views (data:List[Dict[str,Any]])</code></pre>
+<pre><code> register_views (data:List[Dict[str,Any]], context, config)</code></pre>
 </blockquote>
 <p><em>Registers all views in data with VIEW_REGISTRY.</em></p>
 <hr>
@@ -281,7 +287,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Args: sf_config: Dictionary containing Snowflake connection parameters</p>
 <p>Returns: Snowflake connection object*</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L114" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L115" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="get_view_data" class="level3">
 <h3 class="anchored" data-anchor-id="get_view_data">get_view_data</h3>
@@ -292,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Args: view_name: Name of the registered view</p>
 <p>Returns: List of result rows as dictionaries*</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L86" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L87" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="query" class="level3">
 <h3 class="anchored" data-anchor-id="query">query</h3>
@@ -303,16 +309,16 @@ ul.task-list li input[type="checkbox"] {
 <p>Args: sql_query: SQL query to execute</p>
 <p>Returns: List of result rows as dictionaries*</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L179" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L180" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="get_ddl_and_register" class="level3">
 <h3 class="anchored" data-anchor-id="get_ddl_and_register">get_ddl_and_register</h3>
 <blockquote class="blockquote">
-<pre><code> get_ddl_and_register (data)</code></pre>
+<pre><code> get_ddl_and_register (data, context, config)</code></pre>
 </blockquote>
 <p><em>For each view in data, retrieve the DDL and register the view.</em></p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L139" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L140" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="extract_view_sql" class="level3">
 <h3 class="anchored" data-anchor-id="extract_view_sql">extract_view_sql</h3>
@@ -323,7 +329,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Args: ddl: Snowflake view definition</p>
 <p>Returns: Extracted SQL query*</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L245" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/snowflake.py#L246" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="init_view_registry" class="level3">
 <h3 class="anchored" data-anchor-id="init_view_registry">init_view_registry</h3>

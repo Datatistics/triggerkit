@@ -193,6 +193,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../API/shared_context.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">shared_context</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../API/util.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">util</span></a>
   </div>
@@ -252,14 +258,14 @@ ul.task-list li input[type="checkbox"] {
 <section id="built-in-actions" class="level2">
 <h2 class="anchored" data-anchor-id="built-in-actions">Built In Actions:</h2>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L19" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L20" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="run_sql" class="level3">
 <h3 class="anchored" data-anchor-id="run_sql">run_sql</h3>
 <blockquote class="blockquote">
 <pre><code> run_sql (data)</code></pre>
 </blockquote>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L13" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L14" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="send_slack_message" class="level3">
 <h3 class="anchored" data-anchor-id="send_slack_message">send_slack_message</h3>
@@ -272,12 +278,15 @@ ul.task-list li input[type="checkbox"] {
 <section id="make-your-own-actions" class="level2">
 <h2 class="anchored" data-anchor-id="make-your-own-actions">Make Your Own Actions</h2>
 <p>It is simple to make your own actions. All you have to do is make a function that takes in a List of Dicts and <a href="https://Datatistics.github.io/triggerkit/API/actions.html#register"><code>register</code></a> it with the system</p>
+<p>Example action:</p>
+<p>```python from triggerkit import register</p>
+<p><span class="citation" data-cites="register">@register</span>(‘My Action’,‘Does something I want’) def my_action( data: List[Dict], # List of results from the view context: Dict[str, Any], # Shared context between actions config: Dict[str, Any], # Config for the action - Passes job-specific parameters (e.g.&nbsp;thresholds, channel IDs) job_name: str, # (Optional) Name of the job - Helpful for logging, auditing, and debugging run_id: str, # (Optional) Unqiue ID of the run - Useful for traceability in logs, alerts, and audits **kwargs ) -&gt; Dict[str, Any]: …</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L25" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L59" target="_blank" style="float:right; font-size:smaller">source</a></p>
 <section id="register" class="level3">
 <h3 class="anchored" data-anchor-id="register">register</h3>
 <blockquote class="blockquote">
-<pre><code> register (name:str, description:Optional[str]=None)</code></pre>
+<pre><code> register (name:str, description:Optional[str]=None, overwrite:bool=False)</code></pre>
 </blockquote>
 <p>*Register your function as an action in the global registry.</p>
 <p><strong>Args</strong>:</p>
@@ -286,7 +295,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Raises</strong>:</p>
 <p>• <code>ValueError</code>: If an action with the same name already exists*</p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L65" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L108" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="get_info" class="level3">
 <h3 class="anchored" data-anchor-id="get_info">get_info</h3>
@@ -295,7 +304,7 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <p><em>Get detailed information about a specific action.</em></p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L57" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L100" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="list_available" class="level3">
 <h3 class="anchored" data-anchor-id="list_available">list_available</h3>
@@ -304,12 +313,15 @@ ul.task-list li input[type="checkbox"] {
 </blockquote>
 <p><em>List all registered actions with their descriptions.</em></p>
 <hr>
-<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L80" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<p><a href="https://github.com/Datatistics/triggerkit/blob/main/triggerkit/actions.py#L123" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
 <section id="run" class="level3">
 <h3 class="anchored" data-anchor-id="run">run</h3>
 <blockquote class="blockquote">
-<pre><code> run (action_name:str, data:List[Dict[str,Any]])</code></pre>
+<pre><code> run (action_name:str, data:List[Dict[str,Any]],
+      context:Optional[Dict[str,Any]]=None,
+      config:Optional[Dict[str,Any]]=None, job_name:Optional[str]=None,
+      dry_run:Optional[bool]=False)</code></pre>
 </blockquote>
 <p>*Run a registered action with the provided data.</p>
 <p><strong>Args:</strong></p>

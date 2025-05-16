@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://Datatistics.github.io/triggerkit/index.html</loc>
-    <lastmod>2025-05-12T19:56:15.271Z</lastmod>
+    <lastmod>2025-05-16T05:10:29.358Z</lastmod>
   </url>
   <url>
     <loc>https://Datatistics.github.io/triggerkit/API/app.html</loc>
-    <lastmod>2025-05-14T05:06:39.824Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/actions.html</loc>
-    <lastmod>2025-05-14T05:05:28.192Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/database/snowflake.html</loc>
-    <lastmod>2025-05-14T01:45:00.672Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/Explanations/configurations.html</loc>
-    <lastmod>2025-05-14T03:11:00.335Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/Explanations/about.html</loc>
-    <lastmod>2025-05-14T04:19:39.607Z</lastmod>
-  </url>
-  <url>
-    <loc>https://Datatistics.github.io/triggerkit/API/jobs.html</loc>
-    <lastmod>2025-05-14T05:05:28.727Z</lastmod>
+    <lastmod>2025-05-16T05:10:30.011Z</lastmod>
   </url>
   <url>
     <loc>https://Datatistics.github.io/triggerkit/API/util.html</loc>
-    <lastmod>2025-05-14T01:45:00.158Z</lastmod>
+    <lastmod>2025-05-16T05:10:29.406Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/jobs.html</loc>
+    <lastmod>2025-05-16T05:10:29.911Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/Explanations/about.html</loc>
+    <lastmod>2025-05-16T05:10:29.365Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/Explanations/configurations.html</loc>
+    <lastmod>2025-05-16T05:10:29.358Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/database/snowflake.html</loc>
+    <lastmod>2025-05-16T05:10:29.997Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/actions.html</loc>
+    <lastmod>2025-05-16T05:10:29.404Z</lastmod>
+  </url>
+  <url>
+    <loc>https://Datatistics.github.io/triggerkit/API/shared_context.html</loc>
+    <lastmod>2025-05-16T05:11:34.556Z</lastmod>
   </url>
   <url>
     <loc>https://Datatistics.github.io/triggerkit/Tutorials/getting started.html</loc>
-    <lastmod>2025-05-14T03:18:44.044Z</lastmod>
+    <lastmod>2025-05-16T05:10:29.504Z</lastmod>
   </url>
 </urlset>

@@ -7,6 +7,7 @@ website:
           - API/01_actions.ipynb
           - API/02_jobs.ipynb
           - API/03_app.ipynb
+          - API/04_shared_context.ipynb
           - API/99_util.ipynb
           - section: database
             contents:

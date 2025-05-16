@@ -74,8 +74,8 @@ def connect(sf_config: Dict[str, Any]) -> SnowflakeConnection:
             warehouse=sf_config.get('warehouse'),
             database=sf_config.get('database'),
             schema=sf_config.get('schema'),
-            role=sf_config.get('role', 'ACCOUNTADMIN')
-            #,session_parameters={'QUERY_TAG': 'TRIGGERKIT'}
+            role=sf_config.get('role', 'ACCOUNTADMIN'),
+            session_parameters={'QUERY_TAG': 'TRIGGERKIT'}
         )
         util.logger.info("Successfully connected to Snowflake")
         return connection
