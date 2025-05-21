@@ -273,7 +273,7 @@ def schedule_jobs(config: Dict[str, Any]):
 
 # %% ../nbs/API/02_jobs.ipynb 8
 @register('Create Job From View','Creates scheduled jobs for views that have job configuration.')
-def create_job_from_view(data, config, context):
+def create_job_from_view(data, context = None, config = None):
     """
     Create new jobs from views that have job configuration.
     """
