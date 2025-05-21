@@ -143,33 +143,32 @@ def extract_view_sql(ddl: str) -> str:
     Returns:
         Extracted SQL query
     """
-
-    if 'CREATE' not in ddl.upper(): return ddl
-    
-    ddl = ddl.strip().replace(';','')
-
-    match = re.search(r'\bAS\b\s*(\()?[\s\n]*', ddl, flags=re.IGNORECASE)
-    if match:
-        start = match.end()
-        sql = ddl[start:].strip()
-    else:
+    if 'CREATE' not in ddl.upper():
         return ddl
-
-    if sql.startswith('(') and sql.endswith(')'):
-        try:
-            balance = 0
-            for c in sql:
-                if c == '(':
-                    balance += 1
-                elif c == ')':
-                    balance -= 1
-                if balance < 0:
-                    break
-            if balance == 0:
-                sql = sql[1:-1].strip()
-        except Exception:
-            pass
-
+    
+    ddl = ddl.strip().replace(';', '')
+    
+    # Find the AS keyword (case-insensitive)
+    match = re.search(r'\bAS\b\s*', ddl, flags=re.IGNORECASE)
+    if not match:
+        return ddl
+    
+    # Extract everything after AS
+    start = match.end()
+    sql = ddl[start:].strip()
+    
+    # Check if the SQL starts with a parenthesis
+    if sql.startswith('('):
+        # Find the matching closing parenthesis
+        balance = 1  # Start with 1 for the opening parenthesis
+        for i, c in enumerate(sql[1:], 1):
+            if c == '(':
+                balance += 1
+            elif c == ')':
+                balance -= 1
+                if balance == 0:  # Found the matching closing parenthesis
+                    return sql[1:i].strip()
+    
     return sql
 
 @actions.register('Get DDL and Register Views','Given view names, it will retrieve the views\' definition and register the views.')
