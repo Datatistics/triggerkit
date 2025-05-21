@@ -77,7 +77,7 @@ def init(config_path: str):
 
     # Connect to Snowflake
     snowflake_config = config.get('snowflake', {})
-    util.logger.dengu(f"Snowflake Config: {snowflake_config}")
+    util.logger.debug(f"Snowflake Config: {snowflake_config}")
     util.snowflake_connection = snowflake.connect(snowflake_config)
     
     # Register Views
