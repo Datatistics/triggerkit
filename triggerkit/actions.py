@@ -27,7 +27,6 @@ util.ACTION_REGISTRY: Dict[str, Callable] = {}
 ACTION_SCHEMA = {
     "data": {"type": "List[Dict]", "description": "Rows from the Snowflake view."},
     "context": {"type": "Dict[str, Any]", "description": "Shared context between actions."},
-    "config": {"type": "Dict[str, Any]", "description": "Job-specific config from the TOML file or view"},
     "job_name": {"type": "str", "description": "Name of the job triggering this action.","optional": True},
     "run_id": {"type": "str", "description": "Unique ID for this run.","optional": True},
 }
