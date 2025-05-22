@@ -311,14 +311,14 @@ def create_job_from_view(data, context = None):
                 
             if not all([view_name, actions]) or not (view_config.get('schedule') or view_config.get('cron_schedule')):
                 util.logger.info(f"Skipping invalid job configuration: {view}")
-                util.logger.info(f"See debug for missing info.")
-                util.logger.debug(f"Config Values:")
-                util.logger.debug(f' - name: {name}')
-                util.logger.debug(f' - view_name: {view_name}')
-                util.logger.debug(f' - actions: {actions}')
-                util.logger.debug(f" - schedule: {view_config.get('schedule',None)}")
-                util.logger.debug(f" - cron_schedule: {view_config.get('cron_schedule',None)}")
-                util.logger.debug(f' - enabled: {enabled}')
+                #util.logger.info(f"See debug for missing info.")
+                util.logger.info(f"Config Values:")
+                util.logger.info(f' - name: {name}')
+                util.logger.info(f' - view_name: {view_name}')
+                util.logger.info(f' - actions: {actions}')
+                util.logger.info(f" - schedule: {view_config.get('schedule',None)}")
+                util.logger.info(f" - cron_schedule: {view_config.get('cron_schedule',None)}")
+                util.logger.info(f' - enabled: {enabled}')
                 continue
             
                 # Check if job already exists with same configuration
