@@ -316,6 +316,8 @@ def create_job_from_view(data, context = None):
                 util.logger.debug(f' - name: {name}')
                 util.logger.debug(f' - view_name: {view_name}')
                 util.logger.debug(f' - actions: {actions}')
+                util.logger.debug(f" - schedule: {view_config.get('schedule',None)}")
+                util.logger.debug(f" - cron_schedule: {view_config.get('cron_schedule',None)}")
                 util.logger.debug(f' - enabled: {enabled}')
                 continue
             
