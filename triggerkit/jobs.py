@@ -21,7 +21,7 @@ import json
 from .shared_actions import SharedContext
 from .snowflake import get_view_data
 from .actions import run, register
-from datetime import datetime, time as datetime_time
+from datetime import datetime, time as datetime_time, timedelta
 from typing import Dict, List, Callable, Optional, Any, Union, Tuple
 
 # %% ../nbs/API/02_jobs.ipynb 4
@@ -44,12 +44,15 @@ scheduler = BackgroundScheduler(
     timezone='UTC'  # Use UTC for consistent scheduling across timezones
 )
 scheduler.add_jobstore(MemoryJobStore(), 'default')
+scheduler.start()
+
+util.logger.info("Starting APScheduler")
 
 # %% ../nbs/API/02_jobs.ipynb 5
 def create(view_name: str, 
            action_names: Union[str, List[str]], 
            job_name: Optional[str] = None, 
-           executor: str = 'default'):
+           job_config = None) -> Callable:
     """
     Create a job function that fetches data from a view and runs specified actions.
     
@@ -57,17 +60,13 @@ def create(view_name: str,
         view_name: Name of the registered view
         action_names: Name or list of names of registered actions
         job_name: Optional name for the job
-        executor: Name of the executor to use ('default' for thread pool, 'processpool' for process pool)
         
     Returns:
         Job function
     """
-    # TODO: Add print statements
-    if isinstance(action_names, str):
-        action_names = [action_names]
-    
-    if not job_name:
-        job_name = f"{view_name}_{'_'.join(action_names)}_job"
+
+    if isinstance(action_names, str):   action_names = [action_names]
+    if not job_name:                    job_name = f"{view_name}_{'_'.join(action_names)}_job"
     
     def job():
         start_time = datetime.now()
@@ -233,7 +232,8 @@ def schedule_jobs(config: Dict[str, Any]):
         actions = job_config.get('actions', [])
         enabled = job_config.get('enabled', True)
         executor = job_config.get('executor', 'default')
-        
+        run_on_startup = job_config.get('run_on_startup', False)
+
         if not enabled:
             util.logger.info(f"Job '{name}' is disabled, skipping")
             continue
@@ -242,7 +242,7 @@ def schedule_jobs(config: Dict[str, Any]):
             util.logger.warning(f"Skipping invalid job configuration: {job_config}")
             continue
         
-        job_func = create(view_name, actions, name, executor)
+        job_func = create(view_name, actions, name, executor, job_config = job_config)
         
         try:
             # Create trigger from configuration
@@ -259,16 +259,33 @@ def schedule_jobs(config: Dict[str, Any]):
                 misfire_grace_time=job_config.get('misfire_grace_time', 60),
                 max_instances=job_config.get('max_instances', 3)
             )
-            # TODO: Add print statement 
-
+            
             util.logger.info(f"Scheduled job '{name}' for view '{view_name}' with actions {actions} to run {schedule_description}")
+
+            # Add an immediate job if run_on_startup is true
+            if run_on_startup:
+                util.logger.info(f"Job '{name}' is configured to run on startup.")
+                util.logger.info(f"Creating immediate job for '{name}'")
+                # Add a separate job for immediate execution on startup
+                # Give it a unique ID to avoid conflicts with the main scheduled job
+                scheduler.add_job(
+                    job_func,
+                    trigger='date',
+                    run_date=datetime.now() - timedelta(seconds=1),
+                    id=f"{view_name}_startup_run",
+                    name=f"{name} (Startup Run)",
+                    executor=executor,
+                    misfire_grace_time=job_config.get('misfire_grace_time', 60)
+                )
+                util.logger.info(f"Triggered startup run for '{name}'.")
+
             util.SCHEDULED_JOBS[name] = {
                 'actions': actions,
                 'view_name': view_name,
                 'schedule_description': schedule_description,
                 'executor': executor,
                 'enabled': True
-            }
+                }
         except ValueError as e:
             util.logger.warning(f"Error scheduling job '{name}': {e}")
             continue
@@ -278,32 +295,42 @@ def schedule_jobs(config: Dict[str, Any]):
 def create_job_from_view(data, context = None):
     """
     Create new jobs from views that have job configuration.
+
+    Args:
+        data: List of views in the specified schema that have a job configuration
     """
     util.logger.info(f"Creating jobs from views...")
     util.logger.debug(f'Data: {data}')
     results = {}
+
     for view in data:
         try:
             util.logger.info(f"Processing view: {view}")
             view_data = get_view_data(view['TABLE_NAME'])
+            
             if not view_data:
-                util.logger.warning(f"No data returned from view: {view}")
+                util.logger.info(f"Skipping view '{view['TABLE_NAME']}'. No data returned from view: {view}")
                 continue
-            if 'CONFIG' not in view_data[0] and 'TK_CONFIG' not in view_data[0]:
+            if 'CONFIG' not in view_data[0] and 'TK_CONFIG' not in view_data[0] and 'VIEW_CONFIG' not in view_data[0]:
                 util.logger.warning(f"No job configuration found in view: {view}")
                 continue
 
             first_row = view_data[0]
             util.logger.debug(f"Found job configuration in first row: {first_row}")
-            config_col = 'CONFIG' if 'CONFIG' in first_row else 'TK_CONFIG'
+            
+            if   'VIEW_CONFIG' in first_row: config_col = 'VIEW_CONFIG'
+            elif 'TK_CONFIG' in first_row: config_col = 'TK_CONFIG'
+            elif 'CONFIG' in first_row: config_col = 'CONFIG'
+
             view_config = json.loads(first_row[config_col])
 
-            util.logger.debug(f'Config data: {view_config}')
+            util.logger.debug(f'Config data found: {view_config}')
             name = view_config.get('name', view['TABLE_NAME'])
             view_name = view_config.get('view',view['TABLE_NAME'])
             actions = view_config.get('actions', [])
             enabled = view_config.get('enabled', True)
-            executor = view_config.get('executor', 'default')                     
+            executor = view_config.get('executor', 'default')
+            run_on_startup = view_config.get('run_on_startup', False)                     
             
             if not enabled:
                 util.logger.info(f"Job '{name}' is disabled, skipping")
@@ -321,18 +348,26 @@ def create_job_from_view(data, context = None):
                 util.logger.info(f' - enabled: {enabled}')
                 continue
             
-                # Check if job already exists with same configuration
+            # Check if job already exists with same configuration
             if name in util.SCHEDULED_JOBS:
                 existing_job = util.SCHEDULED_JOBS[name]
+
                 # Skip if job is identical
                 if (existing_job['actions'] == actions and 
                     existing_job['view_name'] == view_name and 
                     existing_job['executor'] == executor):
                     util.logger.info(f"Job '{name}' already exists with same configuration, skipping")
                     results[view['TABLE_NAME']] = "Job already exists with same configuration"
+                    # Check for if query is the same?
                     continue
+                else:
+                    util.logger.info(f"Job '{name}' already exists with different configuration, replacing it")
+                    # Remove the existing job
+                    scheduler.remove_job(name)
+                    del util.SCHEDULED_JOBS[name]
+                    util.logger.info(f"Removed existing job '{name}'")
 
-            job_func = create(view_name, actions, name, executor)
+            job_func = create(view_name, actions, name, executor, job_config = view_config)
                 
             try:
                 # Create trigger from configuration
@@ -341,16 +376,34 @@ def create_job_from_view(data, context = None):
                 # Add job to scheduler
                 scheduler.add_job(
                     job_func,
-                    trigger=trigger,
-                    id=view_name,
-                    name=view_name,
-                    replace_existing=True,
-                    executor=executor,
-                    misfire_grace_time=view_config.get('misfire_grace_time', 60),
-                    max_instances=view_config.get('max_instances', 3)
+                    trigger= trigger,
+                    id= view_name,
+                    name= view_name,
+                    replace_existing= True,
+                    executor= executor,
+                    misfire_grace_time= view_config.get('misfire_grace_time', 60),
+                    max_instances= view_config.get('max_instances', 3)
                 )
                 
                 util.logger.info(f"AUTO SCHEDULED job '{name}' based on view '{view_name}' with actions {actions} to run {schedule_description}")
+
+                # Add an immediate job if run_on_startup is true
+                if run_on_startup:
+                    util.logger.info(f"Job '{name}' is configured to run on startup.")
+                    util.logger.info(f"Creating immediate job for '{name}'")
+                    # Add a separate job for immediate execution on startup
+                    # Give it a unique ID to avoid conflicts with the main scheduled job
+                    scheduler.add_job(
+                        job_func,
+                        trigger='date',
+                        run_date=datetime.now() - timedelta(seconds=1),
+                        id=f"{view_name}_startup_run",
+                        name=f"{name} (Startup Run)",
+                        executor=executor,
+                        misfire_grace_time= view_config.get('misfire_grace_time', 60)
+                    )
+                    util.logger.info(f"Triggered startup run for '{name}'.")
+
                 util.SCHEDULED_JOBS[name] = {
                     'actions': actions,
                     'view_name': view_name,
@@ -377,9 +430,7 @@ def run_scheduler():
     Returns:
         None
     """
-    if scheduler.running:
-        util.logger.warning("Scheduler is already running.")
-        return
+    if scheduler.running: return
         
     util.logger.info("Starting APScheduler")
     scheduler.start()
