@@ -118,6 +118,7 @@ def init(config_path: str):
         SLACK_CONFIG = config['slack']
     
     # Schedule jobs
+    jobs.run_scheduler()
     jobs.schedule_jobs(config)
 
 # %% ../nbs/API/03_app.ipynb 7
