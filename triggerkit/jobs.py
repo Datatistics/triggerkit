@@ -269,7 +269,7 @@ def schedule_jobs(config: Dict[str, Any]):
             util.logger.warning(f"Skipping invalid job configuration: {job_config}")
             continue
         
-        job_func = create(view_name, actions, name, executor, job_config = job_config)
+        job_func = create(view_name, actions, name, job_config = job_config)
         
         try:
             # Create trigger from configuration
@@ -394,7 +394,7 @@ def create_job_from_view(data, context = None):
                     del util.SCHEDULED_JOBS[name]
                     util.logger.info(f"Removed existing job '{name}'")
 
-            job_func = create(view_name, actions, name, executor, job_config = view_config)
+            job_func = create(view_name, actions, name, job_config = view_config)
                 
             try:
                 # Create trigger from configuration
