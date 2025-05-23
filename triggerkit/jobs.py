@@ -42,7 +42,7 @@ job_defaults = {
 scheduler = BackgroundScheduler(
     executors=executors,
     job_defaults=job_defaults,
-    timezone='America/Chicago'  # Use UTC for consistent scheduling across timezones
+    timezone='UTC'  # Use UTC for consistent scheduling across timezones
 )
 scheduler.add_jobstore(MemoryJobStore(), 'default')
 
