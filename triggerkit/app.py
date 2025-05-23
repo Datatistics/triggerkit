@@ -72,7 +72,6 @@ def init(config_path: str):
     """
     # Load configuration
     config = util.load_config(config_path)
-    util.logger.info(f"Successfully loaded config from {config_path}")
     util.config = config
     util.SNOWFLAKE_CONFIG = config['snowflake']
     util.logger.info(f"Successfully set util.SNOWFLAKE_CONFIG")
@@ -86,24 +85,26 @@ def init(config_path: str):
 
     # Schedule Check Schema Jobs
     if config['snowflake'].get('check_schema') and ('schema_check_cron' in config['snowflake'].keys() or 'schema_check_freq' in config['snowflake'].keys()):
-        # General Job to add new views from schema
-        config['jobs'].append({
+        
+        new_jobs = [
+            { # General Job to add new views from schema
             'name': 'Check Schema For Views',
             'view': 'tk_check_schema',
             'actions': 'Get DDL and Register Views',
             'schedule': config['snowflake'].get('schema_check_freq', None),
             'cron_schedule': config['snowflake'].get('schema_check_cron', None),
             'run_on_startup': True
-        })
+            },
+            { # Job to check schema for views with job configurations and create the jobs
+                'name': 'Check Schema For Configured Views',
+                'view': 'tk_configured_views',
+                'actions': ['Get DDL and Register Views','Create Job From View'],
+                'schedule': config['snowflake']['schema_check_freq'],
+                'run_on_startup': True
+            }
+            ] + config['jobs']
 
-        # Job to check schema for views with job configurations and create the jobs
-        config['jobs'].append({
-            'name': 'Check Schema For Configured Views',
-            'view': 'tk_cofigured_views',
-            'actions': ['Get DDL and Register Views','Create Job From View'],
-            'schedule': config['snowflake']['schema_check_freq'],
-            'run_on_startup': True
-        })
+        config['jobs'] = new_jobs
     
     # Store config for other components to access
     util.config = config
@@ -118,8 +119,9 @@ def init(config_path: str):
         SLACK_CONFIG = config['slack']
     
     # Schedule jobs
-    jobs.run_scheduler()
+    jobs.start_scheduler()
     jobs.schedule_jobs(config)
+    jobs.keep_alive()
 
 # %% ../nbs/API/03_app.ipynb 7
 def init_cli(args=None):

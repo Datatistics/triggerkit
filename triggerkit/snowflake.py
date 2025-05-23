@@ -213,6 +213,7 @@ def _check_schema(config: Dict[str, Any]):
     """
     if not config.get('snowflake') or not config['snowflake'].get('check_schema'):
         return None
+    print('Running _check_schema function')
 
     database = config['snowflake'].get('database')
     check_schema = config['snowflake'].get('check_schema')
@@ -240,7 +241,9 @@ def _check_schema(config: Dict[str, Any]):
 
     try:
         view_names_list = query(views_query)
-
+        print('view_names_list:', view_names_list)
+        print('views_query:', views_query)
+        print('views_with_config_cols_query:', views_with_config_cols_query)
         return view_names_list, views_query, views_with_config_cols_query
 
     except Exception as e:
@@ -248,6 +251,66 @@ def _check_schema(config: Dict[str, Any]):
         return None
 
 # %% ../nbs/API/database/snowflake.ipynb 12
+def _check_schema(config: Dict[str, Any]):
+    """
+    Retrieves all views in 'check_schema' and constructs queries for view registration.
+    """
+    util.logger.debug("Entering _check_schema function.")
+    if not config.get('snowflake'):
+        util.logger.warning("Snowflake configuration missing in 'config'. Cannot check schema.")
+        return None, None, None
+        
+    snowflake_cfg = config['snowflake']
+    if not snowflake_cfg.get('check_schema'):
+        util.logger.info("'check_schema' not defined in Snowflake configuration. Skipping schema check for dynamic views.")
+        return None, None, None
+
+    database = snowflake_cfg.get('database')
+    check_schema_name = snowflake_cfg.get('check_schema') # Renamed to avoid confusion with function name
+
+    if not database or not check_schema_name:
+        util.logger.error(f"Database ('{database}') or check_schema ('{check_schema_name}') not fully configured in [snowflake] section. Cannot proceed with _check_schema.")
+        return None, None, None
+
+    util.logger.info(f"Checking schema '{database}.{check_schema_name}' for views.")
+
+    # Query to get all of the views defined in the check_schema
+    views_query_template = f"SELECT table_name FROM {database}.INFORMATION_SCHEMA.VIEWS WHERE table_schema = '{check_schema_name}'"
+    
+    # Query to get all of the views that contain TK_CONFIG or CONFIG columns
+    views_with_config_cols_query_template = f"""
+        SELECT DISTINCT table_name
+        FROM {database}.INFORMATION_SCHEMA.COLUMNS
+        WHERE table_schema = '{check_schema_name}'
+        AND column_name ILIKE ANY ('TK_CONFIG', 'CONFIG', 'VIEW_CONFIG') 
+        AND data_type ILIKE ANY ('VARIANT', 'OBJECT')
+        AND table_name IN (
+            SELECT DISTINCT table_name
+            FROM {database}.INFORMATION_SCHEMA.VIEWS
+            WHERE table_schema = '{check_schema_name}'
+        )
+        """
+    try:
+        util.logger.debug(f"Executing views_query: {views_query_template}")
+        view_names_list = query(views_query_template) # This returns list of dicts [{'TABLE_NAME': 'name1'}, ...]
+        
+        if view_names_list is None: # query() could theoretically return None on some error, though it usually raises
+             util.logger.warning(f"Query for view names in schema '{check_schema_name}' returned None.")
+             return None, views_query_template, views_with_config_cols_query_template
+
+
+        util.logger.info(f"Found {len(view_names_list)} views in schema '{check_schema_name}'.")
+        util.logger.debug(f"View names list from schema '{check_schema_name}': {view_names_list}")
+        
+        # view_names_list is what get_ddl_and_register expects (list of dicts with 'TABLE_NAME')
+        return view_names_list, views_query_template, views_with_config_cols_query_template
+
+    except Exception as e:
+        util.logger.error(f"Error executing query in _check_schema for schema '{check_schema_name}': {str(e)}", exc_info=True)
+        # Return the query templates even on error, so init_view_registry can still try to register them if desired
+        return None, views_query_template, views_with_config_cols_query_template
+
+# %% ../nbs/API/database/snowflake.ipynb 13
 def get_view_columns(view_name: str) -> List[str]:
     """
     Get the columns of a view.
@@ -271,7 +334,7 @@ def get_view_columns(view_name: str) -> List[str]:
         util.logger.error(f"Failed to get columns for view '{view_name}': {str(e)}")
         raise
 
-# %% ../nbs/API/database/snowflake.ipynb 13
+# %% ../nbs/API/database/snowflake.ipynb 14
 def init_view_registry(config: Dict[str, Any]):
     """
     Starts View Registry by including all locally defined views and including all views
@@ -289,6 +352,70 @@ def init_view_registry(config: Dict[str, Any]):
     schema_views, check_schema_query, views_with_config_cols_query = _check_schema(config)
 
     if schema_views: 
+        print('Registering views from schema:', schema_views)
         get_ddl_and_register(schema_views)
         register_view('tk_check_schema', check_schema_query)
-        register_view('tk_cofigured_views', views_with_config_cols_query)
+        register_view('tk_configured_views', views_with_config_cols_query)
+
+# %% ../nbs/API/database/snowflake.ipynb 15
+def init_view_registry(config: Dict[str, Any]):
+    """
+    Starts View Registry by including all locally defined views and including all views
+    located in the the schema defined in the configuration file.
+    
+    Args:
+        config: Dictionary containing view configurations
+    
+    Returns:
+        None
+    """
+    util.logger.info("Initializing View Registry...")
+
+    # 1. Register views from the main configuration file (e.g., TOML [[views]])
+    config_defined_views = config.get('views', None)
+    if config_defined_views:
+        util.logger.debug(f"Found {len(config_defined_views)} views defined in configuration file. Attempting to register them.")
+        try:
+            register_views(config_defined_views) # plural register_views
+        except Exception as e:
+            util.logger.error(f"Error registering views from configuration file: {str(e)}", exc_info=True)
+            # Decide if this is fatal. For now, we'll continue to try schema views.
+    else:
+        util.logger.debug("No views found directly in configuration file under 'views' key.")
+
+    # 2. Discover and register views from the specified Snowflake schema
+    util.logger.debug("Attempting to discover views from Snowflake schema specified in 'check_schema'.")
+    schema_views_data, check_schema_query_str, views_with_config_cols_query_str = _check_schema(config) #
+
+    # schema_views_data is a list of dicts like [{'TABLE_NAME': 'view1'}, ...] or None
+    if schema_views_data: 
+        util.logger.debug(f"Successfully retrieved {len(schema_views_data)} view names from 'check_schema'. Proceeding with DDL processing and registration.")
+        try:
+            get_ddl_and_register(schema_views_data) # This will register the views found in the schema
+        except Exception as e:
+            util.logger.error(f"Error during DDL processing and registration for schema views: {str(e)}", exc_info=True)
+    elif schema_views_data is None and config.get('snowflake', {}).get('check_schema'):
+        util.logger.warning(f"'check_schema' is configured, but no views were found or an error occurred in _check_schema. DDL processing skipped.")
+    else: # No check_schema configured or explicitly no views.
+        util.logger.debug("No views to process from 'check_schema' (either not configured, no views found, or error during retrieval).")
+
+
+    # 3. Register the internal 'tk_check_schema' and 'tk_configured_views'
+    # These are registered using their generated SQL query strings.
+    # It's important these queries are valid even if _check_schema had issues fetching view_names_list
+    # as long as check_schema_query_str and views_with_config_cols_query_str were generated.
+    if check_schema_query_str:
+        util.logger.debug("Registering internal view: tk_check_schema")
+        register_view('tk_check_schema', check_schema_query_str, {'description': 'Internal view for checking schema views.'}) #
+    else:
+        util.logger.warning("Could not register 'tk_check_schema' because its query string was not generated (likely 'check_schema' not configured).")
+
+    if views_with_config_cols_query_str:
+        util.logger.debug("Registering internal view: tk_configured_views") # Corrected typo from 'tk_configured_views' to 'tk_configured_views' if intended
+        register_view('tk_configured_views', views_with_config_cols_query_str, {'description': 'Internal view for configured views in schema.'}) #
+    else:
+        util.logger.warning("Could not register 'tk_configured_views' because its query string was not generated (likely 'check_schema' not configured).")
+    
+    util.logger.debug(f"View Registry initialization complete. Total views registered: {len(util.VIEW_REGISTRY)}")
+    util.logger.debug(f"Current VIEW_REGISTRY keys: {list(util.VIEW_REGISTRY.keys())}")
+
