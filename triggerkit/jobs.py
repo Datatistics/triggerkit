@@ -48,7 +48,7 @@ scheduler.start()
 
 util.logger.info("Starting APScheduler")
 
-# %% ../nbs/API/02_jobs.ipynb 5
+# %% ../nbs/API/02_jobs.ipynb 6
 def create(view_name: str, 
            action_names: Union[str, List[str]], 
            job_name: Optional[str] = None, 
@@ -94,7 +94,7 @@ def create(view_name: str,
     job.__name__ = job_name
     return job
 
-# %% ../nbs/API/02_jobs.ipynb 6
+# %% ../nbs/API/02_jobs.ipynb 7
 util.SCHEDULED_JOBS = {}
 
 def _job_listener(event):
@@ -213,7 +213,7 @@ def _create_trigger_from_config(job_config: Dict[str, Any]) -> Tuple[Any, str]:
     
     raise ValueError("No valid scheduling information provided (cron_schedule or schedule)")
 
-# %% ../nbs/API/02_jobs.ipynb 7
+# %% ../nbs/API/02_jobs.ipynb 9
 def schedule_jobs(config: Dict[str, Any]):
     """
     Schedule jobs based on TOML configuration.
@@ -290,7 +290,7 @@ def schedule_jobs(config: Dict[str, Any]):
             util.logger.warning(f"Error scheduling job '{name}': {e}")
             continue
 
-# %% ../nbs/API/02_jobs.ipynb 8
+# %% ../nbs/API/02_jobs.ipynb 11
 @register('Create Job From View','Creates scheduled jobs for views that have job configuration.')
 def create_job_from_view(data, context = None):
     """
@@ -422,7 +422,7 @@ def create_job_from_view(data, context = None):
     return results
 
 
-# %% ../nbs/API/02_jobs.ipynb 9
+# %% ../nbs/API/02_jobs.ipynb 13
 def run_scheduler():
     """
     Run the scheduler in the background.
