@@ -18,6 +18,7 @@ import time
 import logging
 import os
 import json
+import copy
 from .shared_actions import SharedContext
 from .snowflake import get_view_data
 from .actions import run, register
@@ -68,29 +69,55 @@ def create(view_name: str,
     if isinstance(action_names, str):   action_names = [action_names]
     if not job_name:                    job_name = f"{view_name}_{'_'.join(action_names)}_job"
     
-    def job():
-        start_time = datetime.now()
-        util.logger.info(f"Running job '{job_name}' ...")
-        try:
-            # Fetch data from view
-            data = get_view_data(view_name)
-            
-            # Run each action
-            results = {}
-            context = SharedContext()
-            for action_name in action_names:
-                results[action_name] = run(action_name, data, context)
-                context.clear_updates()
-                util.logger.debug(f"[context] '{action_name}' executed successfully.")
-            
-            execution_time = datetime.now() - start_time
-            util.logger.info(f"Job '{job_name}' completed successfully in {execution_time.total_seconds():.2f}s")
-            return results
-        except Exception as e:
-            execution_time = datetime.now() - start_time
-            util.logger.error(f"Job '{job_name}' failed after {execution_time.total_seconds():.2f}s: {str(e)}")
-            raise
+    share_data = job_config.get('share_data', None) if job_config else None
     
+    if share_data:
+        def job():
+            start_time = datetime.now()
+            util.logger.info(f"Running job '{job_name}' ...")
+            try:
+                # Fetch data from view
+                data = get_view_data(view_name)
+                
+                # Run each action
+                results = {}
+                context = SharedContext()
+                for action_name in action_names:
+                    results[action_name] = run(action_name, data, context)
+                    context.clear_updates()
+                    util.logger.debug(f"[context] '{action_name}' executed successfully.")
+                
+                execution_time = datetime.now() - start_time
+                util.logger.info(f"Job '{job_name}' completed successfully in {execution_time.total_seconds():.2f}s")
+                return results
+            except Exception as e:
+                execution_time = datetime.now() - start_time
+                util.logger.error(f"Job '{job_name}' failed after {execution_time.total_seconds():.2f}s: {str(e)}")
+                raise
+    else:
+        def job():
+            start_time = datetime.now()
+            util.logger.info(f"Running job '{job_name}' ...")
+            try:
+                # Fetch data from view
+                data = get_view_data(view_name)
+                
+                # Run each action
+                results = {}
+                context = SharedContext()
+                for action_name in action_names:
+                    isolated_data = copy.deepcopy(data) 
+                    results[action_name] = run(action_name, isolated_data, context)
+                    context.clear_updates()
+                    util.logger.debug(f"[context] '{action_name}' executed successfully.")
+                
+                execution_time = datetime.now() - start_time
+                util.logger.info(f"Job '{job_name}' completed successfully in {execution_time.total_seconds():.2f}s")
+                return results
+            except Exception as e:
+                execution_time = datetime.now() - start_time
+                util.logger.error(f"Job '{job_name}' failed after {execution_time.total_seconds():.2f}s: {str(e)}")
+                raise
     job.__name__ = job_name
     return job
 
